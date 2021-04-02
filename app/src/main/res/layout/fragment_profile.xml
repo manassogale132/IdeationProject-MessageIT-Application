@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/unsplash_second" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_photo"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-85dp"
+            android:elevation="5dp"
+            android:padding="8dp"
+            app:civ_border_color="@color/teal_200"
+            app:civ_border_width="1dp"
+            android:src="@drawable/default_user_image"/>
+
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="142dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-24dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@color/teal_700"
+            android:elevation="4dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:id="@+id/user_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="76dp"
+                android:hint="User Name"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_layout"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_bio"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:textColor="@color/black"
+                android:drawableTint="@color/teal_700"
+                android:elevation="7dp"
+                android:drawablePadding="15dp"
+                android:padding="20dp"
+                android:textSize="16sp"
+                android:hint="Status"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/ic_baseline_text_snippet_24" />
+
+
+            <TextView
+                android:id="@+id/user_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:textColor="@color/black"
+                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:drawableTint="@color/teal_700"
+                android:elevation="7dp"
+                android:drawablePadding="15dp"
+                android:padding="20dp"
+                android:textSize="16sp"
+                android:hint="Email"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_baseline_email_24" />
+
+            <TextView
+                android:id="@+id/user_age"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:textColor="@color/black"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawableTint="@color/teal_700"
+                android:elevation="7dp"
+                android:drawablePadding="15dp"
+                android:padding="20dp"
+                android:textSize="16sp"
+                android:hint="Age"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_baseline_person_24" />
+
+            <TextView
+                android:id="@+id/user_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:textColor="@color/black"
+                android:drawableStart="@drawable/ic_baseline_local_phone_24"
+                android:drawableTint="@color/teal_700"
+                android:elevation="7dp"
+                android:drawablePadding="15dp"
+                android:padding="20dp"
+                android:textSize="16sp"
+                android:hint="Phone"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_baseline_person_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/custom_font_number_one"
+                android:text="MessageIt"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="65dp"
+                android:textColor="@color/teal_700"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
