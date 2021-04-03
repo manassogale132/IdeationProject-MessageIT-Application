@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,9 +23,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.forgot_password_dialog.*
 
 class LoginActivity : AppCompatActivity() {
@@ -97,20 +100,33 @@ class LoginActivity : AppCompatActivity() {
         val myView: View = dialogPlus.holderView
         val reset: Button = myView.findViewById(R.id.btn_reset)
         val close: Button = myView.findViewById(R.id.btn_close)
-        val enteremail: EditText = myView.findViewById(R.id.enterEmail)
 
         dialogPlus.show()
 
         close.setOnClickListener {
             dialogPlus.dismiss()
         }
+        fun forgot(enterEmail: EditText) {
 
-        reset.setOnClickListener {
-            fun forgot(username: EditText) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(enterEmail.text.toString()).matches()) {
+                return
             }
+            if (enterEmail.text.toString().isEmpty()) {
+                return
+            }
+
+            auth.sendPasswordResetEmail(enterEmail.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Password reset email sent!", Toast.LENGTH_SHORT).show()
+                        dialogPlus.dismiss()
+                    }
+                }
+        }
+        reset.setOnClickListener {
+            forgot(enterEmail)
         }
     }
-
     //-------------------------------------------------------------------------------------------------------------------------
     private fun loginUserValidation() {
 
@@ -207,12 +223,34 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SignInActivity", "signInWithCredential:success")
-                    Toast.makeText(baseContext, "Login Successful.", Toast.LENGTH_SHORT).show()
+
+                    val db = FirebaseFirestore.getInstance()
+
+                    val userID = auth.currentUser?.uid
+                    val currentUser = auth.currentUser
+                    val status = ""
+                    val fullName = currentUser?.displayName.toString()
+                    val age = ""
+                    val emailId = currentUser?.email.toString()
+                    val phoneNumber = ""
+
+                    val userInfo = UserInfo(userID,status,fullName,age,emailId,phoneNumber)
+
+                    db.collection("User Profiles").document(userID!!)
+                        .set(userInfo).addOnSuccessListener {
+                            Log.d("registerAddToFirestore", "signUpUserValidation: success")
+                        }
+                        .addOnFailureListener {
+                            Log.d("registerAddToFirestore", "signUpUserValidation: failure")
+                        }
+
+                    Toast.makeText(baseContext, "Login Successful!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, TabbedActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
+                    Toast.makeText(baseContext, "Google sign in failed!", Toast.LENGTH_SHORT).show()
                 }
             }
     }

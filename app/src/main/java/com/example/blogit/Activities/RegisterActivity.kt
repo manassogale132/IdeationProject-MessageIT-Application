@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -47,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
             registerFullName.requestFocus()
             return
         }
-        if (registerFullName.text.toString().matches("^[\\\\p{L} .'-]+\$".toRegex())) {
+        if (registerFullName.text.toString().matches("[0-9*\$%#&^()@!_+{}';]".toRegex())) {
             registerFullName.error = "Please enter proper Fullname"
             registerFullName.requestFocus()
             return
@@ -87,6 +90,26 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(registerEmailId.text.toString(), registerPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+
+                    val db = FirebaseFirestore.getInstance()
+
+                    val userID = auth.currentUser?.uid
+                    val status = ""
+                    val fullName = registerFullName.editableText.toString()
+                    val age = registerAge.editableText.toString()
+                    val emailId = registerEmailId.editableText.toString()
+                    val phoneNumber = registerPhoneNumber.editableText.toString()
+
+                    val userInfo = UserInfo(userID,status,fullName,age,emailId,phoneNumber)
+
+                    db.collection("User Profiles").document(userID!!)
+                        .set(userInfo).addOnSuccessListener {
+                            Log.d("registerAddToFirestore", "signUpUserValidation: success")
+                        }
+                        .addOnFailureListener {
+                            Log.d("registerAddToFirestore", "signUpUserValidation: failure")
+                        }
+
                     Toast.makeText(baseContext, "User registered successfully!", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
