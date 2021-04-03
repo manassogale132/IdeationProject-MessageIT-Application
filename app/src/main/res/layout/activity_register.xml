@@ -134,13 +134,24 @@
                 android:paddingRight="26dp"
                 android:textColor="@color/black" />
 
+            <CheckBox
+                android:id="@+id/registerPasswordCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="46dp"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Show Password"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/registerPhoneNumber"
                 android:layout_width="320dp"
                 android:layout_height="52dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="48dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="48dp"
                 android:background="@drawable/custon_background"
                 android:drawableEnd="@drawable/ic_baseline_local_phone_24"
@@ -175,21 +186,6 @@
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
                 android:layout_gravity="center_horizontal"/>
-
-            <Button
-                android:id="@+id/tabbed"
-                android:layout_width="155dp"
-                android:layout_marginTop="35dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_background"
-                android:text="Sign Up"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                app:backgroundTint="@color/teal_700" />
-
 
         </LinearLayout>
     </RelativeLayout>
