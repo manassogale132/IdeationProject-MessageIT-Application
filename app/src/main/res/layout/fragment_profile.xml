@@ -11,23 +11,23 @@
         <ImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/unsplash_second" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile_photo"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:layout_below="@+id/header_cover_image"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="-85dp"
+            android:layout_marginLeft="25dp"
             android:elevation="5dp"
             android:padding="8dp"
             app:civ_border_color="@color/teal_200"
             app:civ_border_width="1dp"
-            android:src="@drawable/default_user_image"/>
+            android:src="@drawable/user"/>
 
 
         <RelativeLayout
@@ -48,8 +48,8 @@
                 android:id="@+id/user_profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="76dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="60dp"
                 android:hint="User Name"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
@@ -142,6 +142,13 @@
                 android:layout_marginTop="65dp"
                 android:textColor="@color/teal_700"
                 android:textSize="25sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_blogger"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
     </RelativeLayout>
