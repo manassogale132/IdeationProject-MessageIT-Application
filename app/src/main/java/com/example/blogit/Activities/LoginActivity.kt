@@ -8,6 +8,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.util.Patterns
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -95,7 +96,8 @@ class LoginActivity : AppCompatActivity() {
     //-------------------------------------------------------------------------------------------------------------------------
     private fun forgotPassword() {
         val dialogPlus = DialogPlus.newDialog(this)
-            .setContentHolder(ViewHolder(R.layout.forgot_password_dialog)).create()
+            .setContentHolder(ViewHolder(R.layout.forgot_password_dialog))
+            .setGravity(Gravity.CENTER).create()
 
         val myView: View = dialogPlus.holderView
         val reset: Button = myView.findViewById(R.id.btn_reset)

@@ -2,6 +2,7 @@ package com.example.blogit.Fragments
 
 import android.os.Bundle
 import android.text.Editable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,7 @@ class ProfileFragment : Fragment() {
 
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                Glide.with(this@ProfileFragment).load(currentUser?.photoUrl).error(R.drawable.user).into(user_profile_photo)
+                context?.let { Glide.with(it).load(currentUser?.photoUrl).error(R.drawable.user).into(user_profile_photo) }
                 user_profile_name.text = value?.getString("fullName")
                 user_email.text = value?.getString("emailId")
                 user_age.text = value?.getString("age")
@@ -62,7 +63,8 @@ class ProfileFragment : Fragment() {
     //------------------------------------------------------------------------------------------------------------------------- --
     private fun editUserInformation() {
         val dialogPlus = DialogPlus.newDialog(context)
-            .setContentHolder(ViewHolder(R.layout.edit_user_info_dialog)).create()
+            .setContentHolder(ViewHolder(R.layout.edit_user_info_dialog))
+            .setGravity(Gravity.CENTER).create()
 
         val myView: View = dialogPlus.holderView
         val fullName: EditText = myView.findViewById(R.id.editEnterFullName)
