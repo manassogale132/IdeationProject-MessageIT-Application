@@ -24,12 +24,11 @@
             android:src="@drawable/button_background" />
 
 
-
     </RelativeLayout>
 
     <TextView
         android:id="@+id/statusText"
-        android:layout_width="285dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
@@ -42,7 +41,7 @@
 
     <TextView
         android:id="@+id/createTime"
-        android:layout_width="285dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
@@ -52,6 +51,17 @@
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/image_layout"
         app:layout_constraintTop_toTopOf="@+id/image_layout" />
+
+    <ImageView
+        android:id="@+id/deleteStatusBtn"
+        android:layout_width="52dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="0dp"
