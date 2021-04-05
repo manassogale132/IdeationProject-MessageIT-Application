@@ -16,21 +16,13 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circular_image_view"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_centerInParent="true"
             android:padding="6dp"
             android:src="@drawable/button_background" />
 
-        <com.devlomi.circularstatusview.CircularStatusView
-            android:id="@+id/circular_status_view"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_centerInParent="true"
-            app:portion_color="@color/teal_200"
-            app:portion_spacing="4dp"
-            app:portion_width="4dp"
-            app:portions_count="8" />
 
 
     </RelativeLayout>

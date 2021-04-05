@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -16,13 +17,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.blogit.Adapters.StatusAdapter
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.R
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.karumi.dexter.Dexter
@@ -36,18 +42,59 @@ import com.orhanobut.dialogplus.ViewHolder
 import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.fragment_uploadimage_status_dialog.*
 import java.io.InputStream
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class StatusFragment : Fragment() {
+
+    lateinit var recyclerViewStatusList : RecyclerView
+    lateinit var statusAdapter: StatusAdapter
+    lateinit var manager : LinearLayoutManager
 
     private lateinit var auth: FirebaseAuth
     private lateinit var filePath: Uri
     private lateinit var bitmap: Bitmap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_status, container, false)
+        val view = inflater.inflate(R.layout.fragment_status,container,false)
+
+        recyclerViewStatusList = view.findViewById(R.id.recyclerViewStatusList)
+        manager = LinearLayoutManager(context)
+        recyclerViewStatusList.layoutManager = manager
+
+        loadDataIntoRecycler()
+
+        return view
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
+    private fun loadDataIntoRecycler() {
+
+        auth = FirebaseAuth.getInstance()
+        val userID = auth.currentUser?.uid
+        val query: Query = FirebaseFirestore.getInstance().collection("Status Info")
+            .whereEqualTo("userID",userID)
+            .orderBy("creationTime")
+            .limit(50)
+
+        val options: FirestoreRecyclerOptions<StatusInfo> = FirestoreRecyclerOptions.Builder<StatusInfo>()
+            .setQuery(query, StatusInfo::class.java).build()
+
+        statusAdapter = StatusAdapter(options)
+        recyclerViewStatusList.adapter = statusAdapter
+    }
+    override fun onStart() {
+        super.onStart()
+        statusAdapter.startListening()
     }
 
+    override fun onStop() {
+        super.onStop()
+        statusAdapter.stopListening()
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
@@ -88,6 +135,8 @@ class StatusFragment : Fragment() {
 
                         }
                     }).check()
+
+
             }
 
             uploadBtn.setOnClickListener {
@@ -109,11 +158,15 @@ class StatusFragment : Fragment() {
 
                             val userID = auth.currentUser?.uid
                             val statustext = enterStatus.editableText.toString()
+                            val timestamp = DateTimeFormatter
+                                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                                .withZone(ZoneOffset.UTC)
+                                .format(Instant.now())
 
-                            val statusInfo = StatusInfo(userID, statustext, it.toString())
+                            val statusInfo = StatusInfo(userID, statustext,timestamp, it.toString())
 
-                            db.collection("Status Info").document(userID!!)
-                                .set(statusInfo).addOnSuccessListener {
+                            db.collection("Status Info")
+                                .add(statusInfo).addOnSuccessListener {
                                     Log.d("Status Info Check", "signUpUserValidation: success")
                                 }
                                 .addOnFailureListener {
@@ -122,9 +175,8 @@ class StatusFragment : Fragment() {
 
                             enterStatus.setText("")
 
-                            imageViewUpload.setImageResource(R.drawable.ic_baseline_file_upload_24)
                             Toast.makeText(context as Activity?, "Status uploaded!", Toast.LENGTH_SHORT).show()
-                            enterStatus.clearFocus()
+                            dialogPlus.dismiss()
                         }
                     }
                     .addOnProgressListener {
