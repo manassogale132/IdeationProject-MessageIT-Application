@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.blogit.Adapters.StatusAdapter
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.R
@@ -42,6 +43,8 @@ import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.fragment_uploadimage_status_dialog.*
+import kotlinx.android.synthetic.main.fragment_uploadimage_status_dialog.view.*
+import kotlinx.android.synthetic.main.status_item_view.*
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,6 +58,8 @@ class StatusFragment : Fragment() {
     lateinit var recyclerViewStatusList : RecyclerView
     lateinit var statusAdapter: StatusAdapter
     lateinit var manager : LinearLayoutManager
+
+    lateinit var myViewTwo: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_status,container,false)
@@ -102,7 +107,7 @@ class StatusFragment : Fragment() {
                 .setContentHolder(ViewHolder(R.layout.fragment_uploadimage_status_dialog))
                 .setGravity(Gravity.CENTER).create()
 
-            val myViewTwo: View = dialogPlus.holderView
+            myViewTwo = dialogPlus.holderView
             val imageViewUpload: ImageView = myViewTwo.findViewById(R.id.imageViewUpload)
             val browseBtn: Button = myViewTwo.findViewById(R.id.browseBtn)
             val enterStatus: EditText = myViewTwo.findViewById(R.id.enterStatus)
@@ -187,9 +192,9 @@ class StatusFragment : Fragment() {
         if (requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             filePath = data?.data!!                              //image uri is in filepath
             try {
-                val inputStream: InputStream? = context!!.contentResolver.openInputStream(filePath)
+                val inputStream: InputStream? = requireContext().contentResolver.openInputStream(filePath)
                 bitmap = BitmapFactory.decodeStream(inputStream)
-                imageViewUpload.setImageBitmap(bitmap)              //setting image view with the selected image
+                myViewTwo.imageViewUpload.setImageBitmap(bitmap)              //setting image view with the selected image
             } catch (ex: Exception) {
 
             }
