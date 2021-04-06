@@ -74,7 +74,7 @@ class StatusFragment : Fragment() {
         val userID = auth.currentUser?.uid
 
         val db = FirebaseFirestore.getInstance()
-        val query: Query = db.collection("Status Info").whereEqualTo("userID", userID)
+        val query: Query = db.collection("Status Info").whereEqualTo("userID", userID).orderBy("creationTime",Query.Direction.DESCENDING)
 
         val options: FirestoreRecyclerOptions<StatusInfo> = FirestoreRecyclerOptions.Builder<StatusInfo>()
             .setQuery(query, StatusInfo::class.java).build()
