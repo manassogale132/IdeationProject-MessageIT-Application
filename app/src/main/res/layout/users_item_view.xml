@@ -17,11 +17,12 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_circular_image_view"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
             android:layout_centerInParent="true"
             android:padding="6dp"
-            android:src="@drawable/user" />
+            android:src="@drawable/ic_baseline_personnn_outline_24" />
 
 
     </RelativeLayout>
@@ -55,7 +56,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="#e1e1e1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
