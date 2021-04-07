@@ -68,7 +68,6 @@ class MessageActivity : AppCompatActivity()  {
             }
         })
 
-
     }
     //-------------------------------------------------------------------------------------------------------------------------
     private fun sendMessage(sender :String, receiver: String, message: String ) {

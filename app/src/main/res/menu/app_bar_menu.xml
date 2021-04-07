@@ -6,7 +6,7 @@
     <item
         android:id="@+id/allUsers"
         android:title="Logout"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_baseline_message_24"
         app:showAsAction="ifRoom"/>
 
     <item

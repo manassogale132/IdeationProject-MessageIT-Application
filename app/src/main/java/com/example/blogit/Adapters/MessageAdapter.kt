@@ -11,7 +11,7 @@ import com.example.blogit.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class MessageAdapter(private var context: Context,private var mChat: MutableList<Chat>) : RecyclerView.Adapter<MessageAdapter.MyViewHolder>() {
+class MessageAdapter(var context: Context,var mChat: MutableList<Chat>) : RecyclerView.Adapter<MessageAdapter.MyViewHolder>() {
 
     private  var firebaseUser: FirebaseUser? = null
     val msg_type_left : Int = 0

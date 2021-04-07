@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.blogit.Fragments.MessageFragment
 import com.example.blogit.Fragments.ProfileFragment
 import com.example.blogit.Fragments.StatusFragment
 import com.example.blogit.R
@@ -27,12 +26,9 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         var fragment: Fragment? = null
         when (position) {
             0 -> {
-                fragment = MessageFragment()
-            }
-            1 -> {
                 fragment = StatusFragment()
             }
-            2 -> {
+            1 -> {
                 fragment = ProfileFragment()
             }
         }
@@ -41,15 +37,15 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return "Message"
-            1 -> return "Status"
-            2 -> return "Profile"
+            0 -> return "Status"
+            1 -> return "Profile"
+
         }
         return null
     }
 
     override fun getCount(): Int {
         // Show 3 total pages.
-        return 3
+        return 2
     }
 }
