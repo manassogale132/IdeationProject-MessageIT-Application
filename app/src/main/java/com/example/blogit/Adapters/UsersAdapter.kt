@@ -1,10 +1,15 @@
 package com.example.blogit.Adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.blogit.Activities.MessageActivity
+import com.example.blogit.Activities.RegisterActivity
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -23,6 +28,12 @@ class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>):
     override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: UserInfo) {
         holder.userName.text = model.fullName
         holder.userBio.text = model.status
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(it.context, MessageActivity::class.java)
+            intent.putExtra("userID",model.userID)
+            it.context.startActivity(intent)
+        }
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
