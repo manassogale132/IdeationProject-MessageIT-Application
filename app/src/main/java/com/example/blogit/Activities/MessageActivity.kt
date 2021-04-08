@@ -1,5 +1,6 @@
 package com.example.blogit.Activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -13,7 +14,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.EventListener
 import kotlinx.android.synthetic.main.activity_message.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class MessageActivity : AppCompatActivity()  {
@@ -26,6 +32,7 @@ class MessageActivity : AppCompatActivity()  {
     lateinit var recyclerViewMessageList : RecyclerView
     lateinit var manager : LinearLayoutManager
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
@@ -55,7 +62,7 @@ class MessageActivity : AppCompatActivity()  {
         send_button.setOnClickListener {
             val msg : String = message_input.text.toString()
             if(!msg.equals("")) {
-                sendMessage(firebaseUser!!.uid,userid,msg,creationtime = System.currentTimeMillis())
+                sendMessage(firebaseUser!!.uid,userid,msg,creationtime = System.currentTimeMillis(),timestamp = SimpleDateFormat("dd-MM-yyyy / hh-mm-ss").format(Date())  )
             }
             else {
                 Toast.makeText(this,"You cannot send empty message",Toast.LENGTH_SHORT).show()
@@ -64,7 +71,7 @@ class MessageActivity : AppCompatActivity()  {
         }
     }
     //-------------------------------------------------------------------------------------------------------------------------
-    private fun sendMessage(sender :String, receiver: String, message: String ,creationtime : Long ) {
+    private fun sendMessage(sender :String, receiver: String, message: String ,creationtime : Long,timestamp : String) {
 
         val db = FirebaseFirestore.getInstance()
         val hashMap : HashMap<String, Any> = HashMap()
@@ -72,6 +79,7 @@ class MessageActivity : AppCompatActivity()  {
         hashMap.put("receiver",receiver)
         hashMap.put("message",message)
         hashMap.put("creationtime",creationtime)
+        hashMap.put("timestamp",timestamp)
 
         db.collection("Chats").document().set(hashMap)
     }

@@ -56,14 +56,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/message_input"
             android:layout_width="0dp"
             android:hint="Enter your message"
             android:layout_height="wrap_content"
+            android:padding="20dp"
             android:layout_weight="0.5" />
 
         <ImageButton
@@ -72,7 +72,8 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/button_background"
-            android:src="@drawable/ic_baseline_send_24" />
+            android:src="@drawable/ic_baseline_send_24"
+            android:layout_marginRight="5dp"/>
     </LinearLayout>
 
 </RelativeLayout>
