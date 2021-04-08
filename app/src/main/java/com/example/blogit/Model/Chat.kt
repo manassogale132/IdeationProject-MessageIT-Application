@@ -4,6 +4,7 @@ class Chat {
 
     var sender : String? = null
     var receiver : String? = null
+    var creationtime : Long = System.currentTimeMillis()
     var message : String? = null
 
     constructor(){
