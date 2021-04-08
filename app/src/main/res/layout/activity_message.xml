@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6">
+    android:background="@drawable/chatbackground">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:hint="Enter your message"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7" />
+            android:layout_weight="0.5" />
 
         <ImageButton
             android:id="@+id/send_button"

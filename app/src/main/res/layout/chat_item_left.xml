@@ -9,7 +9,7 @@
         android:id="@+id/chat_user_circular_image_view"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/ic_baseline_personnn_outline_24" />
+        android:src="@drawable/ic_baseline_person_24" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,6 +17,9 @@
         android:layout_toRightOf="@id/chat_user_circular_image_view"
         android:layout_marginLeft="5dp"
         android:text="message"
+        android:textSize="18sp"
+        android:id="@+id/show_message"
+        android:textColor="@color/white"
         android:padding="8dp"
         android:background="@drawable/background_left"/>
 
