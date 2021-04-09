@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
@@ -29,7 +30,7 @@ class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>):
         holder.userName.text = model.fullName
         holder.userBio.text = model.status
 
-        holder.itemView.setOnClickListener {
+        holder.sendMessage.setOnClickListener {
             val intent = Intent(it.context, MessageActivity::class.java)
             intent.putExtra("userID",model.userID)
             it.context.startActivity(intent)
@@ -40,5 +41,6 @@ class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>):
         var user_circular_image_view : CircleImageView = itemView.findViewById(R.id.user_circular_image_view)
         var userName : TextView = itemView.findViewById(R.id.userName)
         var userBio : TextView = itemView.findViewById(R.id.userBio)
+        var sendMessage : Button = itemView.findViewById(R.id.sendMessage)
     }
 }

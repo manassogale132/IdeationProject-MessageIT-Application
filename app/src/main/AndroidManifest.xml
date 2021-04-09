@@ -33,10 +33,6 @@
             android:theme="@style/Theme.BlogIt.NoActionBar.NoActionBar" />
 
         <activity
-            android:name=".Activities.AllUserListActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".Activities.MessageActivity"
             android:screenOrientation="portrait" />
     </application>

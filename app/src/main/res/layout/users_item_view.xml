@@ -19,8 +19,8 @@
             android:id="@+id/user_circular_image_view"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginTop="30dp"
             android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
             android:padding="6dp"
             android:src="@drawable/ic_baseline_personnn_outline_24" />
 
@@ -31,7 +31,7 @@
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="44dp"
         android:layout_marginTop="15dp"
         android:text="User Name"
@@ -44,7 +44,7 @@
         android:id="@+id/userBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="44dp"
         android:layout_marginTop="48dp"
         android:text="Bio"
@@ -61,5 +61,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_layout" />
+
+    <Button
+        android:id="@+id/sendMessage"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Chat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/userName"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

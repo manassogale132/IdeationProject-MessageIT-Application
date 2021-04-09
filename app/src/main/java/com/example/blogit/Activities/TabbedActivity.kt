@@ -57,12 +57,6 @@ class TabbedActivity : AppCompatActivity() {
                 finish()
                 true
             }
-            R.id.allUsers -> {
-                val intent = Intent(this, AllUserListActivity::class.java)
-                Toast.makeText(this, "Show users list!", Toast.LENGTH_SHORT).show()
-                startActivity(intent)
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
