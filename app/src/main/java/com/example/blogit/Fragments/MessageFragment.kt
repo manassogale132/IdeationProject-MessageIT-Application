@@ -1,12 +1,13 @@
-package com.example.blogit.Activities
+package com.example.blogit.Fragments
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.blogit.Adapters.StatusAdapter
 import com.example.blogit.Adapters.UsersAdapter
-import com.example.blogit.Model.StatusInfo
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -14,24 +15,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
-class AllUserListActivity: AppCompatActivity()  {
-
+class MessageFragment  : Fragment()  {
     private lateinit var auth: FirebaseAuth
     lateinit var recyclerViewALlUsersList : RecyclerView
     lateinit var usersAdapter: UsersAdapter
     lateinit var manager : LinearLayoutManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_alluserlist)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_allusers_chat,container,false)
         auth = FirebaseAuth.getInstance()
 
-        recyclerViewALlUsersList = findViewById(R.id.recyclerViewALlUsersList)
-        manager = LinearLayoutManager(this)
+        recyclerViewALlUsersList = view.findViewById(R.id.recyclerViewALlUsersList)
+        manager = LinearLayoutManager(context)
         recyclerViewALlUsersList.layoutManager = manager
 
-
         loadDataIntoRecycler()
+
+        return view
     }
 
     private fun loadDataIntoRecycler() {
@@ -53,5 +53,9 @@ class AllUserListActivity: AppCompatActivity()  {
     override fun onStop() {
         super.onStop()
         usersAdapter.stopListening()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }
