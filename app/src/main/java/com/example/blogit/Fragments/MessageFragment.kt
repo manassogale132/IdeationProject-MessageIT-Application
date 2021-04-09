@@ -35,8 +35,9 @@ class MessageFragment  : Fragment()  {
     }
 
     private fun loadDataIntoRecycler() {
+        val userID = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance()
-        val query: Query = db.collection("User Profiles")
+        val query: Query = db.collection("User Profiles").whereNotEqualTo("userID",userID)
 
         val options: FirestoreRecyclerOptions<UserInfo> = FirestoreRecyclerOptions.Builder<UserInfo>()
             .setQuery(query, UserInfo::class.java).build()
