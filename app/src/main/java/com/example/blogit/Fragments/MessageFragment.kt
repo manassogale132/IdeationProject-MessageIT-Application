@@ -27,6 +27,7 @@ class MessageFragment  : Fragment()  {
 
         recyclerViewALlUsersList = view.findViewById(R.id.recyclerViewALlUsersList)
         manager = LinearLayoutManager(context)
+        recyclerViewALlUsersList.setHasFixedSize(true);
         recyclerViewALlUsersList.layoutManager = manager
 
         loadDataIntoRecycler()
@@ -42,7 +43,7 @@ class MessageFragment  : Fragment()  {
         val options: FirestoreRecyclerOptions<UserInfo> = FirestoreRecyclerOptions.Builder<UserInfo>()
             .setQuery(query, UserInfo::class.java).build()
 
-        usersAdapter = UsersAdapter(options)
+        usersAdapter = UsersAdapter(options,true)
         recyclerViewALlUsersList.adapter = usersAdapter
     }
 

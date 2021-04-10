@@ -54,6 +54,7 @@
         app:layout_constraintTop_toTopOf="@+id/image_layout" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
@@ -74,6 +75,36 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/userName"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_on"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_color="#05df29"
+        app:civ_border_width="10dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/userBio"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_off"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_color="#bfbfbf"
+        app:civ_border_width="10dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/userBio"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,8 @@ import com.example.blogit.Activities.ui.main.SectionsPagerAdapter
 import com.example.blogit.R
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import de.hdodenhof.circleimageview.CircleImageView
@@ -22,12 +24,14 @@ import de.hdodenhof.circleimageview.CircleImageView
 class TabbedActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var fStore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
 
         auth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
@@ -51,6 +55,13 @@ class TabbedActivity : AppCompatActivity() {
         val id = item.itemId
         return when (id) {
             R.id.menuLogout -> {
+                val userID = auth.currentUser?.uid
+                val documentReference: DocumentReference = fStore.collection("User Profiles").document(userID!!)
+                val hashMap: HashMap<String, Any> = HashMap()
+                hashMap.put("onlineOfflineStatus","offline")
+
+                documentReference.update(hashMap)
+
                 auth.signOut()
                 Toast.makeText(baseContext,"Logged Out!", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this,LoginActivity::class.java))
@@ -61,5 +72,24 @@ class TabbedActivity : AppCompatActivity() {
         }
     }
     //-------------------------------------------------------------------------------------------------------------------------
+    private fun status(onlineOfflineStatus : String) {
 
+        val userID = auth.currentUser?.uid ?: return
+        val documentReference: DocumentReference = fStore.collection("User Profiles").document(userID)
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("onlineOfflineStatus",onlineOfflineStatus)
+
+        documentReference.update(hashMap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        status("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        status("offline")
+    }
 }

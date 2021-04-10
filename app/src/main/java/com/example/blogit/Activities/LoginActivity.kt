@@ -236,6 +236,7 @@ class LoginActivity : AppCompatActivity() {
                     val emailId = currentUser?.email.toString()
                     val phoneNumber = ""
 
+
                     val userInfo = UserInfo(userID,status,fullName,age,emailId,phoneNumber)
 
                     db.collection("User Profiles").document(userID!!)

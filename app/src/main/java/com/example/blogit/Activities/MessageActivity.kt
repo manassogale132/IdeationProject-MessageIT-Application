@@ -50,7 +50,7 @@ class MessageActivity : AppCompatActivity()  {
 
         recyclerViewMessageList = findViewById(R.id.recyclerViewMessageList)
         recyclerViewMessageList.setHasFixedSize(true)
-        manager = LinearLayoutManager(applicationContext)
+        manager = LinearLayoutManager(this)
         manager.stackFromEnd = true
         recyclerViewMessageList.layoutManager = manager
 
@@ -60,7 +60,7 @@ class MessageActivity : AppCompatActivity()  {
 
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                Glide.with(this@MessageActivity).load(currentUser?.photoUrl).error(R.drawable.user).into(selectedUserPhoto)
+                Glide.with(applicationContext).load(currentUser?.photoUrl).error(R.drawable.user).into(selectedUserPhoto)
                 selectedUserName.text = value?.getString("fullName")
 
                 readMessages(firebaseUser!!.uid,userid)
@@ -117,4 +117,24 @@ class MessageActivity : AppCompatActivity()  {
         })
     }
     //-------------------------------------------------------------------------------------------------------------------------
+    private fun status(onlineOfflineStatus : String) {
+
+        val userID = auth.currentUser?.uid
+        val documentReference: DocumentReference = fStore.collection("User Profiles").document(userID!!)
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("onlineOfflineStatus",onlineOfflineStatus)
+
+        documentReference.update(hashMap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        status("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        status("offline")
+    }
 }

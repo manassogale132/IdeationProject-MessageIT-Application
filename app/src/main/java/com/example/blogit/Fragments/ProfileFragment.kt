@@ -51,7 +51,10 @@ class ProfileFragment : Fragment() {
 
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                context?.let { Glide.with(it).load(currentUser?.photoUrl).error(R.drawable.user).into(user_profile_photo) }
+                if(currentUser != null) {
+                    Glide.with(context!!).load(currentUser.photoUrl).error(R.drawable.user)
+                        .into(user_profile_photo)
+                }
                 user_profile_name.text = value?.getString("fullName")
                 user_email.text = value?.getString("emailId")
                 user_age.text = value?.getString("age")
