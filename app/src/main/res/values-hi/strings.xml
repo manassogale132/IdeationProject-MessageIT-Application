@@ -37,12 +37,12 @@
     <string name="save_edit">सहेजें</string>
 
     <string name="browse">ब्राउज़</string>
-    <string name="enter_status">विवरण दर्ज करें…</string>
+    <string name="enter_status">स्टेटस दर्ज करें…</string>
     <string name="upload">अपलोड करें</string>
     <string name="close_status">बंद करे</string>
 
     <string name="users">उपयोगकर्ता</string>
-    <string name="status">स्थिति</string>
+    <string name="status">स्टेटस</string>
     <string name="profile">प्रोफ़ाइल</string>
 
     <string name="enter_your_message">अपना संदेश दर्ज करें</string>

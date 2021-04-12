@@ -36,7 +36,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
             2 -> {
                 fragment = ProfileFragment()
             }
-
         }
         return fragment!!
     }
