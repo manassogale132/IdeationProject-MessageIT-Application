@@ -60,7 +60,7 @@ class MessageActivity : AppCompatActivity()  {
 
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                Glide.with(applicationContext).load(currentUser?.photoUrl).error(R.drawable.user).into(selectedUserPhoto)
+                //Glide.with(applicationContext).load(currentUser?.photoUrl).error(R.drawable.user).into(selectedUserPhoto)
                 selectedUserName.text = value?.getString("fullName")
 
                 readMessages(firebaseUser!!.uid,userid)

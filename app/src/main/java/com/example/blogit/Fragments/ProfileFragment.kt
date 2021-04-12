@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
@@ -37,31 +38,23 @@ class ProfileFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
 
-        displayUserInformation()
-
-        user_edit_info.setOnClickListener {
-            editUserInformation()
-        }
-    }
-    //-------------------------------------------------------------------------------------------------------------------------
-    private fun displayUserInformation() {
         val userID = auth.currentUser?.uid
-        val currentUser = auth.currentUser
         val documentReference: DocumentReference = fStore.collection("User Profiles").document(userID!!)
 
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                if(currentUser != null) {
-                    Glide.with(context!!).load(currentUser.photoUrl).error(R.drawable.user)
-                        .into(user_profile_photo)
-                }
-                user_profile_name.text = value?.getString("fullName")
-                user_email.text = value?.getString("emailId")
-                user_age.text = value?.getString("age")
-                user_phone.text = value?.getString("phoneNumber")
-                user_bio.text = value?.getString("status")
+                user_profile_name?.text = value?.getString("fullName")
+                user_bio?.text = value?.getString("status")
+                user_email?.text = value?.getString("emailId")
+                user_age?.text = value?.getString("age")
+                user_phone?.text = value?.getString("phoneNumber")
             }
         })
+
+
+        user_edit_info.setOnClickListener {
+            editUserInformation()
+        }
     }
     //------------------------------------------------------------------------------------------------------------------------- --
     private fun editUserInformation() {
