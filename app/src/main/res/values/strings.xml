@@ -3,4 +3,55 @@
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <string name="login">Login</string>
+    <string name="someone_gmail_com">Someone@gmail.com</string>
+    <string name="password">Password</string>
+    <string name="show_password">Show Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="dont_have_an_account_register_here">Don\'t have an account? Register here</string>
+
+    <string name="register">Register</string>
+    <string name="full_name">Full Name</string>
+    <string name="age">Age</string>
+    <string name="someone_gmail_com_register">Someone@gmail.com</string>
+    <string name="password_register">Password</string>
+    <string name="show_password_register">Show Password</string>
+    <string name="phone">Phone</string>
+    <string name="sign_up">Sign Up</string>
+
+    <string name="forgot_password_dialog">Forgot Password?</string>
+    <string name="enter_email_here">Enter email…</string>
+    <string name="close">close</string>
+    <string name="reset">Reset</string>
+
+    <string name="user_name">User Name</string>
+    <string name="bio">Bio</string>
+    <string name="email">Email</string>
+    <string name="age_profile">Age</string>
+    <string name="phone_profile">Phone</string>
+
+    <string name="edit_user_information">Edit User Information</string>
+    <string name="enter_bio">Enter bio…</string>
+    <string name="enter_fullname">Enter fullname…</string>
+    <string name="enter_age">Enter age…</string>
+    <string name="enter_phonenumber">Enter phonenumber…</string>
+    <string name="close_edit">close</string>
+    <string name="save_edit">Save</string>
+
+    <string name="browse">Browse</string>
+    <string name="enter_status">Enter status…</string>
+    <string name="upload">Upload</string>
+    <string name="close_status">Close</string>
+
+    <string name="users">Users</string>
+    <string name="status">Status</string>
+    <string name="profile">Profile</string>
+
+    <string name="enter_your_message">Enter your message</string>
+
+    <string name="chat">Chat</string>
+
+
 </resources>

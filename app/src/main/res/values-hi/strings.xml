@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">लॉगइन</string>
+    <string name="someone_gmail_com">ईमेल@gmail.com</string>
+    <string name="password">पासवर्ड</string>
+    <string name="show_password">शो पासवर्ड</string>
+    <string name="forgot_password">पासवर्ड भूल गए?</string>
+    <string name="sign_in">साइन इन करें</string>
+    <string name="dont_have_an_account_register_here">प्रोफ़ाइल नहीं है? यहां रजिस्टर करें</string>
+
+    <string name="register">रजिस्टर</string>
+    <string name="full_name">पूरा नाम</string>
+    <string name="age">उम्र</string>
+    <string name="someone_gmail_com_register">कोई@gmail.com</string>
+    <string name="password_register">पासवर्ड</string>
+    <string name="show_password_register">शो पासवर्ड</string>
+    <string name="phone">फ़ोन</string>
+    <string name="sign_up">साइन अप करें</string>
+
+    <string name="forgot_password_dialog">पासवर्ड भूल गए?</string>
+    <string name="enter_email_here">यहां ईमेल दर्ज करें</string>
+    <string name="close">बंद करे</string>
+    <string name="reset">रीसेट</string>
+
+    <string name="user_name">उपयोगकर्ता नाम</string>
+    <string name="bio">बायो</string>
+    <string name="email">ईमेल</string>
+    <string name="age_profile">उम्र</string>
+    <string name="phone_profile">फ़ोन</string>
+
+    <string name="edit_user_information">उपयोगकर्ता जानकारी संपादित करें</string>
+    <string name="enter_bio">बायो दर्ज करें…</string>
+    <string name="enter_fullname">पूरा नाम दर्ज करें…</string>
+    <string name="enter_age">आयु दर्ज करें…</string>
+    <string name="enter_phonenumber">फोन नंबर दर्ज करें…</string>
+    <string name="close_edit">बंद करे</string>
+    <string name="save_edit">सहेजें</string>
+
+    <string name="browse">ब्राउज़</string>
+    <string name="enter_status">विवरण दर्ज करें…</string>
+    <string name="upload">अपलोड करें</string>
+    <string name="close_status">बंद करे</string>
+
+    <string name="users">उपयोगकर्ता</string>
+    <string name="status">स्थिति</string>
+    <string name="profile">प्रोफ़ाइल</string>
+
+    <string name="enter_your_message">अपना संदेश दर्ज करें</string>
+
+    <string name="chat">बातचीत</string>
+
+
+</resources>

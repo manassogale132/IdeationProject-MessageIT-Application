@@ -52,7 +52,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="70dp"
                 android:gravity="center_horizontal"
-                android:hint="User Name"
+                android:hint="@string/user_name"
                 android:layout_centerHorizontal="true"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
@@ -90,7 +90,7 @@
                 android:drawablePadding="15dp"
                 android:padding="20dp"
                 android:textSize="18sp"
-                android:hint="Bio"
+                android:hint="@string/bio"
                 android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/ic_baseline_text_snippet_24" />
 
@@ -108,7 +108,7 @@
                 android:drawablePadding="15dp"
                 android:padding="20dp"
                 android:textSize="18sp"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_baseline_email_24" />
 
@@ -125,7 +125,7 @@
                 android:drawablePadding="15dp"
                 android:padding="20dp"
                 android:textSize="18sp"
-                android:hint="Age"
+                android:hint="@string/age_profile"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_baseline_person_24" />
 
@@ -142,7 +142,7 @@
                 android:drawablePadding="15dp"
                 android:padding="20dp"
                 android:textSize="18sp"
-                android:hint="Phone"
+                android:hint="@string/phone_profile"
                 android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_baseline_person_24" />
 

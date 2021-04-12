@@ -1,6 +1,7 @@
 package com.example.blogit.Activities.ui.main
 
 import android.content.Context
+import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -42,9 +43,9 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return "Users"
-            1 -> return "Status"
-            2 -> return "Profile"
+            0 -> return  context.getString(R.string.users)
+            1 -> return  context.getString(R.string.status)
+            2 -> return  context.getString(R.string.profile)
 
         }
         return null
