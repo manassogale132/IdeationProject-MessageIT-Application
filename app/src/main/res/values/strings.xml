@@ -44,6 +44,7 @@
     <string name="enter_status">Enter status…</string>
     <string name="upload">Upload</string>
     <string name="close_status">Close</string>
+    <string name="upload_status">Upload status</string>
 
     <string name="users">Users</string>
     <string name="status">Status</string>
@@ -52,6 +53,7 @@
     <string name="enter_your_message">Enter your message</string>
 
     <string name="chat">Chat</string>
+
 
 
 </resources>

@@ -16,10 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:text="@string/edit_user_information"
         android:textColor="@color/teal_700"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:textStyle="bold"/>
 
 

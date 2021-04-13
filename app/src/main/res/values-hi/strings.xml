@@ -40,6 +40,7 @@
     <string name="enter_status">स्टेटस दर्ज करें…</string>
     <string name="upload">अपलोड करें</string>
     <string name="close_status">बंद करे</string>
+    <string name="upload_status">अपलोड स्टेटस</string>
 
     <string name="users">उपयोगकर्ता</string>
     <string name="status">स्टेटस</string>
