@@ -1,12 +1,19 @@
 package com.example.blogit.Activities
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.*
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
@@ -19,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class TabbedActivity : AppCompatActivity() {
@@ -29,6 +38,7 @@ class TabbedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
+        loadLocale()
 
         auth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
@@ -68,9 +78,54 @@ class TabbedActivity : AppCompatActivity() {
                 finish()
                 true
             }
+            R.id.menuLanguage -> {
+                showChangeLanguageDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+    //-------------------------------------------------------------------------------------------------------------------------
+    private fun showChangeLanguageDialog() {
+        val listItems : Array<String> = arrayOf("English","हिंदी")
+        val mBuilder : AlertDialog.Builder = AlertDialog.Builder(this)
+        mBuilder.setTitle("Choose Language...")
+        mBuilder.setSingleChoiceItems(listItems, -1, DialogInterface.OnClickListener { dialog, i ->
+            if(i == 0){
+                setLocal("en")
+                recreate()
+            }
+            if(i == 1){
+                setLocal("hi")
+                recreate()
+            }
+
+            dialog.dismiss()
+        })
+        val mDialog : AlertDialog = mBuilder.create()
+        mDialog.show()
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private fun setLocal(lang : String) {
+        var locale : Locale = Locale(lang)
+        Locale.setDefault(locale)
+        var config : Configuration = Configuration()
+        config.locale = locale
+        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+
+        //saved data to shared preferences
+        val editor : SharedPreferences.Editor = getSharedPreferences("Settings", MODE_PRIVATE).edit()
+        editor.putString("My_Lang", lang)
+        editor.apply()
+    }
+
+    private fun loadLocale() {
+        val pref : SharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language : String? = pref.getString("My_Lang", "")
+        setLocal(language!!)
+    }
+
     //-------------------------------------------------------------------------------------------------------------------------
     private fun status(onlineOfflineStatus : String) {
 

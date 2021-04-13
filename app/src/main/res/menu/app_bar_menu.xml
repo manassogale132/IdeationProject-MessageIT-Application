@@ -4,6 +4,12 @@
 
 
     <item
+        android:id="@+id/menuLanguage"
+        android:title="Logout"
+        android:icon="@drawable/ic_baseline_language_24"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/menuLogout"
         android:title="Logout"
         android:icon="@drawable/ic_baseline_logout_24"
