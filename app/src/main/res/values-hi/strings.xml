@@ -45,10 +45,17 @@
     <string name="users">उपयोगकर्ता</string>
     <string name="status">स्टेटस</string>
     <string name="profile">प्रोफ़ाइल</string>
+    <string name="groups">ग्रुप्स</string>
 
     <string name="enter_your_message">अपना संदेश दर्ज करें</string>
 
-    <string name="chat">बातचीत</string>
+    <string name="chat">चैट</string>
+
+    <string name="create_group">क्रिएट ग्रुप</string>
+    <string name="create_group_dialog">क्रिएट ग्रुप डायलॉग</string>
+    <string name="enter_group_name">यहां ग्रुप नाम दर्ज करें</string>
+    <string name="create">क्रिएट</string>
+    <string name="group_chat">ग्रुप्स चैट</string>
 
 
 </resources>

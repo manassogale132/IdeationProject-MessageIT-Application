@@ -70,7 +70,8 @@ class MessageActivity : AppCompatActivity()  {
         send_button.setOnClickListener {
             val msg : String = message_input.text.toString()
             if(!msg.equals("")) {
-                sendMessage(firebaseUser!!.uid,userid,msg,creationtime = System.currentTimeMillis(),timestamp = SimpleDateFormat("dd-MM-yyyy / hh:mm:ss").format(Date()))
+                sendMessage(firebaseUser!!.uid, userid, msg, creationtime = System.currentTimeMillis(),
+                    timestamp = SimpleDateFormat("dd-MM-yyyy / hh:mm:ss").format(Date()))
             }
             else {
                 Toast.makeText(this,"You cannot send empty message",Toast.LENGTH_SHORT).show()

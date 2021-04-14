@@ -14,6 +14,4 @@ class Groups {
         this.groupID = groupID
         this.groupName = groupName
     }
-
-
 }
