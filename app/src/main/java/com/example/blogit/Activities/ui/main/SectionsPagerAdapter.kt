@@ -35,10 +35,10 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
                 fragment = StatusFragment()
             }
             2 -> {
-                fragment = ProfileFragment()
+                fragment = GroupFragment()
             }
             3 -> {
-                fragment = GroupFragment()
+                fragment = ProfileFragment()
             }
         }
         return fragment!!
@@ -48,8 +48,8 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         when (position) {
             0 -> return  context.getString(R.string.users)
             1 -> return  context.getString(R.string.status)
-            2 -> return  context.getString(R.string.profile)
-            3 -> return  context.getString(R.string.groups)
+            2 -> return  context.getString(R.string.groups)
+            3 -> return  context.getString(R.string.profile)
 
         }
         return null
