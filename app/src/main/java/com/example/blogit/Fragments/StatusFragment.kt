@@ -168,10 +168,10 @@ class StatusFragment : Fragment() {
 
                             db.collection("Status Info").document()
                                 .set(statusInfo).addOnSuccessListener {
-                                    Log.d("Status Info Check", "signUpUserValidation: success")
+                                    Log.d("Status Info Check", "Status: success")
                                 }
                                 .addOnFailureListener {
-                                    Log.d("Status Info Check", "signUpUserValidation: failure")
+                                    Log.d("Status Info Check", "Status: failure")
                                 }
 
                             enterStatus.setText("")

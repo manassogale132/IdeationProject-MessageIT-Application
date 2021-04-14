@@ -49,11 +49,17 @@
     <string name="users">Users</string>
     <string name="status">Status</string>
     <string name="profile">Profile</string>
+    <string name="groups">Groups</string>
 
     <string name="enter_your_message">Enter your message</string>
 
     <string name="chat">Chat</string>
 
+    <string name="create_group">Create Group</string>
+    <string name="create_group_dialog">Create Group Dialog</string>
+    <string name="enter_group_name">Enter group name</string>
+    <string name="create">Create</string>
+    <string name="group_chat">Group Chat</string>
 
 
 </resources>
