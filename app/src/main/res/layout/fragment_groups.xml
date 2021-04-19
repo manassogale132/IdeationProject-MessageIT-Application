@@ -11,12 +11,10 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/custon_background"
         android:layout_marginBottom="5dp"
-        android:drawableEnd="@drawable/ic_baseline_add_24"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:textSize="15sp"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_baseline_add_24" />
+        android:layout_height="wrap_content" />
 
 
     <androidx.recyclerview.widget.RecyclerView

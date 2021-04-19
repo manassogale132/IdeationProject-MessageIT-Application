@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import com.squareup.okhttp.internal.DiskLruCache
 import kotlinx.android.synthetic.main.activity_message.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.text.SimpleDateFormat
@@ -35,6 +36,10 @@ class MessageActivity : AppCompatActivity()  {
     lateinit var manager : LinearLayoutManager
 
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var seenListener : ListenerRegistration
+
+    private lateinit var ref : Query
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +87,27 @@ class MessageActivity : AppCompatActivity()  {
         backMessageActivity.setOnClickListener {
             finish()
         }
+
+        seenMessage(userid)
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
+    private fun seenMessage(userid: String) {
+        ref = fStore.collection("Chats").orderBy("creationtime",Query.Direction.ASCENDING)
+
+        seenListener=  ref.addSnapshotListener(object : EventListener<QuerySnapshot> {
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                for (documentsnapshot: DocumentSnapshot in value!!.documents) {
+                    val chat: Chat? = documentsnapshot.toObject(Chat::class.java)
+                    if(chat?.receiver.equals(firebaseUser!!.uid) && chat?.sender.equals(userid)){
+                        val hashMap : HashMap<String, Any> = HashMap()
+                        hashMap.put("isseen",true)
+
+                        documentsnapshot.reference.update(hashMap)
+                    }
+                }
+            }
+        })
+
     }
     //-------------------------------------------------------------------------------------------------------------------------
     private fun sendMessage(sender :String, receiver: String, message: String ,creationtime : Long,timestamp : String) {
@@ -93,6 +119,7 @@ class MessageActivity : AppCompatActivity()  {
         hashMap.put("message",message)
         hashMap.put("creationtime",creationtime)
         hashMap.put("timestamp",timestamp)
+        hashMap.put("isseen",false)
 
         db.collection("Chats").document().set(hashMap)
     }
@@ -100,7 +127,7 @@ class MessageActivity : AppCompatActivity()  {
     private fun readMessages(myid : String, userid : String) {
         mchat = ArrayList()
 
-        val ref : Query = fStore.collection("Chats").orderBy("creationtime",Query.Direction.ASCENDING)
+        ref = fStore.collection("Chats").orderBy("creationtime",Query.Direction.ASCENDING)
         ref.addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                 mchat.clear()
@@ -136,6 +163,7 @@ class MessageActivity : AppCompatActivity()  {
 
     override fun onPause() {
         super.onPause()
+        seenListener.remove()
         status("offline")
     }
 }

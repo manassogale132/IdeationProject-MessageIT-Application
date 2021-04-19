@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.blogit.Activities.MessageActivity
 import com.example.blogit.Activities.RegisterActivity
 import com.example.blogit.Model.Chat
@@ -16,7 +17,9 @@ import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>,var isChat: Boolean):
     FirestoreRecyclerAdapter<UserInfo, UsersAdapter.MyViewHolder>(options)  {

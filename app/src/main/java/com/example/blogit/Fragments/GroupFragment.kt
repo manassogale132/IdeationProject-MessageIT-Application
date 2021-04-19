@@ -1,6 +1,7 @@
 package com.example.blogit.Fragments
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -10,10 +11,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.blogit.Activities.MessageActivity
 import com.example.blogit.Adapters.GroupAdapter
+import com.example.blogit.Adapters.UserGroupAdapter
 import com.example.blogit.Model.Groups
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.R

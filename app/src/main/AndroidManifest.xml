@@ -39,6 +39,10 @@
         <activity
             android:name=".Activities.GroupMessageActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Activities.UsersListGroupActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

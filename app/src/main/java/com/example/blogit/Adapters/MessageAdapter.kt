@@ -34,6 +34,17 @@ class MessageAdapter(var context: Context,var mChat: MutableList<Chat>) : Recycl
         val chat : Chat = mChat.get(position)
         holder.show_message.setText(chat.message)
         holder.messageTimeStamp.setText(chat.timestamp)
+
+        if(position == mChat.size -1) {
+            if(chat.isseen!!){
+                holder.text_seen.setText("Seen")
+            }
+            else {
+                holder.text_seen.setText("Delivered")
+            }
+        } else {
+            holder.text_seen.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int {
@@ -43,6 +54,8 @@ class MessageAdapter(var context: Context,var mChat: MutableList<Chat>) : Recycl
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var show_message : TextView = itemView.findViewById(R.id.show_message)
         var messageTimeStamp : TextView = itemView.findViewById(R.id.messageTimeStamp)
+        var text_seen : TextView = itemView.findViewById(R.id.text_seen)
+
     }
 
     override fun getItemViewType(position: Int): Int {

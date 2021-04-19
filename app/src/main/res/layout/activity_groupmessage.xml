@@ -43,14 +43,13 @@
             android:layout_marginStart="5dp" />
 
         <ImageView
+            android:id="@+id/addUserTotheGroupImgView"
             android:layout_width="32dp"
             android:layout_height="31dp"
-            android:src="@drawable/ic_baseline_groups_24"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="7dp"
+            android:src="@drawable/ic_baseline_person_add_24"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginStart="200dp" />
+            android:layout_marginLeft="215dp"
+            android:layout_marginStart="215dp" />
 
     </LinearLayout>
 

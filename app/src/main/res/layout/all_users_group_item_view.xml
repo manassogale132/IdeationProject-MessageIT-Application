@@ -16,29 +16,40 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_circular_image_view_group"
+            android:id="@+id/user_circular_image_view"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="30dp"
             android:padding="6dp"
-            android:background="@drawable/custon_background"
-            android:src="@drawable/ic_baseline_groups_242" />
+            android:src="@drawable/ic_baseline_personnn_outline_24" />
 
 
     </RelativeLayout>
 
-
     <TextView
-        android:id="@+id/groupName"
+        android:id="@+id/userNameGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="24dp"
-        android:text="Group Name"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="15dp"
+        android:text="User Name"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/image_layout"
+        app:layout_constraintTop_toTopOf="@+id/image_layout" />
+
+    <TextView
+        android:id="@+id/userBioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="48dp"
+        android:text="Bio"
+        android:textColor="#717171"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/image_layout"
         app:layout_constraintTop_toTopOf="@+id/image_layout" />
 
@@ -52,20 +63,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_layout" />
 
-
     <Button
-        android:id="@+id/sendGroupMessageBtn"
-        android:layout_width="58dp"
+        android:id="@+id/addUserToGroup"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:drawableEnd="@drawable/ic_baseline_message_24"
+        android:text="Add to Group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/userName"
-        app:layout_constraintTop_toTopOf="parent"
-        android:drawableRight="@drawable/ic_baseline_message_24" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
