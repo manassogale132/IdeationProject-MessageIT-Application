@@ -7,7 +7,7 @@
     android:background="@drawable/chatbackground">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -36,11 +36,11 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="9dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="45dp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="67dp"
             tools:layout_editor_absoluteY="9dp"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="45dp" />
 
         <ImageView
             android:id="@+id/addUserTotheGroupImgView"
@@ -48,10 +48,23 @@
             android:layout_height="31dp"
             android:src="@drawable/ic_baseline_person_add_24"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="215dp"
-            android:layout_marginStart="215dp" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/checkAddedUsersToGrpBtn"
+            android:layout_width="31dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="60dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/white_baseline_person_24"/>
+
+    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView

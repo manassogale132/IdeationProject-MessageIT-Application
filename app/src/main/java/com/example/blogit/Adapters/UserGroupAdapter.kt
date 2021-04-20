@@ -3,6 +3,7 @@ package com.example.blogit.Adapters
 import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.Intent.getIntent
+import android.content.Intent.parseUri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,8 +21,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 
-class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>):
+class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : String):
     FirestoreRecyclerAdapter<UserInfo, UserGroupAdapter.MyViewHolder>(options)   {
+
+    private var groupStringId : String = groupid
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,11 +39,13 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>):
         holder.addUserToGroup.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
 
-            val groupID = java.util.UUID.randomUUID().toString()
             val addedUserID = model.userID
-            val group = Groups(addedUserID)
+            val addedUserName = model.fullName
+            val addedUserTest = null
 
-            db.collection("Groups").document(groupID).collection("Members").document(addedUserID!!)
+            val group = Groups(addedUserID,addedUserName,addedUserTest)
+
+            db.collection("Groups").document(groupStringId).collection("Members").document(addedUserID!!)
                 .set(group).addOnSuccessListener {
                     Log.d("Groups Add", "Added: success")
                 }

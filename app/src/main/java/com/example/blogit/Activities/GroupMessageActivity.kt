@@ -44,11 +44,22 @@ class GroupMessageActivity : AppCompatActivity() {
         addUserTotheGroupImgView.setOnClickListener {
             addUserTotheGroupImgViewMethod()
         }
+
+        checkAddedUsersToGrpBtn.setOnClickListener {
+            checkAddedUsersToGrpMethod()
+        }
     }
 
     private fun addUserTotheGroupImgViewMethod() {
         val intent = Intent(this, UsersListGroupActivity::class.java)
         Toast.makeText(this, "Showing all users!", Toast.LENGTH_SHORT).show()
+        intent.putExtra("groupID",groupIDString)
+        startActivity(intent)
+    }
+
+    private fun checkAddedUsersToGrpMethod() {
+        val intent = Intent(this, AddedUsersListToGroupActivity::class.java)
+        Toast.makeText(this, "Showing all Group members!", Toast.LENGTH_SHORT).show()
         intent.putExtra("groupID",groupIDString)
         startActivity(intent)
     }
