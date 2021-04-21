@@ -47,6 +47,10 @@
         <activity
             android:name=".Activities.AddedUsersListToGroupActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Activities.StatusImageFullScreen"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

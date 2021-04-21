@@ -1,19 +1,28 @@
 package com.example.blogit.Adapters
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.blogit.Activities.GroupMessageActivity
+import com.example.blogit.Activities.StatusImageFullScreen
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_statusimagefullscreen.*
 
 class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
     FirestoreRecyclerAdapter<StatusInfo, StatusAdapter.MyViewHolder>(options) {
@@ -40,6 +49,20 @@ class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
             builder.setNegativeButton("No", DialogInterface.OnClickListener { _, _ ->
             })
             builder.show()
+        }
+
+        holder.circular_image_view.setOnClickListener {
+            val intent = Intent(it.context, StatusImageFullScreen::class.java)
+            intent.putExtra("pimage",model.pimage)
+
+            val options : ActivityOptionsCompat?  = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptionsCompat.makeSceneTransitionAnimation(it.context as Activity,holder.circular_image_view ,
+                    "example_transition" )
+            } else {
+                null
+            }
+
+            it.context.startActivity(intent , options?.toBundle())
         }
     }
 
