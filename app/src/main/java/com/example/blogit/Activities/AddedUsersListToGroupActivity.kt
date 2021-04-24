@@ -52,7 +52,7 @@ class AddedUsersListToGroupActivity  : AppCompatActivity()   {
         val userID = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance()
         val ref: DocumentReference =  db.collection("Groups").document(groupIDString)
-        val queryTwo : Query = ref.collection("Members").orderBy("creationTime")
+        val queryTwo : Query = ref.collection("Members").orderBy("creationTime",Query.Direction.ASCENDING)
 
 
         val options: FirestoreRecyclerOptions<Groups> = FirestoreRecyclerOptions.Builder<Groups>()

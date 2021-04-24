@@ -18,6 +18,8 @@ import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -25,6 +27,7 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
     FirestoreRecyclerAdapter<UserInfo, UserGroupAdapter.MyViewHolder>(options)   {
 
     private var groupStringId : String = groupid
+    private  var firebaseUser: FirebaseUser? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -38,12 +41,11 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
 
         holder.addUserToGroup.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
-
+            firebaseUser = FirebaseAuth.getInstance().currentUser
             val addedUserID = model.userID
             val addedUserName = model.fullName
-            val addedUserTest = null
 
-            val group = Groups(addedUserID,addedUserName,addedUserTest)
+            val group = Groups(addedUserID,addedUserName)
 
             db.collection("Groups").document(groupStringId).collection("Members").document(addedUserID!!)
                 .set(group).addOnSuccessListener {

@@ -22,10 +22,14 @@ import com.example.blogit.Model.Groups
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
+import kotlinx.android.synthetic.main.create_group_dialog.*
 import kotlinx.android.synthetic.main.fragment_groups.*
 
 class GroupFragment: Fragment()   {
@@ -33,6 +37,9 @@ class GroupFragment: Fragment()   {
     lateinit var recyclerViewALlGroupsList : RecyclerView
     lateinit var groupAdapter: GroupAdapter
     lateinit var manager : LinearLayoutManager
+
+    private  var firebaseUser: FirebaseUser? = null
+    lateinit var groupID : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_groups,container,false)
@@ -47,10 +54,12 @@ class GroupFragment: Fragment()   {
     }
     //-------------------------------------------------------------------------------------------------------------------------
     private fun loadDataIntoRecycler() {
-
-
         val db = FirebaseFirestore.getInstance()
-        val query: Query = db.collection("Groups").orderBy("creationTime")
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val groupAdminUid = firebaseUser!!.uid
+
+        val query: Query = db.collection("Groups").whereEqualTo("groupAdminUid",groupAdminUid)
 
         val options: FirestoreRecyclerOptions<Groups> = FirestoreRecyclerOptions.Builder<Groups>()
             .setQuery(query, Groups::class.java).build()
@@ -89,19 +98,29 @@ class GroupFragment: Fragment()   {
 
             btn_create_group.setOnClickListener {
 
-                val db = FirebaseFirestore.getInstance()
-
-                val groupID = java.util.UUID.randomUUID().toString()
+                firebaseUser = FirebaseAuth.getInstance().currentUser
+                /*val db = FirebaseFirestore.getInstance()
                 val groupName = groupNameEditText.editableText.toString()
+                val groupAdminUid = firebaseUser!!.uid
 
-                val group = Groups(groupID,groupName)
+                val group = Groups(groupID,groupName,groupAdminUid)
                 db.collection("Groups").document(groupID)
                     .set(group).addOnSuccessListener {
                         Log.d("Groups Info Check", "Groups: success")
                     }
                     .addOnFailureListener {
                         Log.d("Groups Info Check", "Groups: failure")
-                    }
+                    }*/
+
+                groupID = java.util.UUID.randomUUID().toString()
+                val db = FirebaseFirestore.getInstance()
+                val hashMap : HashMap<String, Any> = HashMap()
+                hashMap.put("groupID",groupID)
+                hashMap.put("groupName",groupNameEditText.editableText.toString())
+                hashMap.put("groupAdminUid",firebaseUser!!.uid)
+                hashMap.put("creationtime",System.currentTimeMillis())
+
+                db.collection("Groups").document(groupID).set(hashMap)
 
                 groupNameEditText.setText("")
                 Toast.makeText(context as Activity?, "Group Created!", Toast.LENGTH_SHORT).show()

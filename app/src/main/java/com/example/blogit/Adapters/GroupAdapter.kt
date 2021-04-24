@@ -30,6 +30,7 @@ class GroupAdapter(options: FirestoreRecyclerOptions<Groups>):
         holder.sendGroupMessageBtn.setOnClickListener {
             val intent = Intent(it.context, GroupMessageActivity::class.java)
             intent.putExtra("groupID",model.groupID)
+            intent.putExtra("groupName",model.groupName)
             it.context.startActivity(intent)
         }
     }

@@ -30,5 +30,4 @@ class AddedUsersGroupAdapter(options: FirestoreRecyclerOptions<Groups>):
         var user_circular_image_view_Added : CircleImageView = itemView.findViewById(R.id.user_circular_image_view_Added)
         var userNameGroupAdded : TextView = itemView.findViewById(R.id.userNameGroupAdded)
     }
-
 }

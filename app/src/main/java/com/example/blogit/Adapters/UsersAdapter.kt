@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.blogit.Activities.MessageActivity
 import com.example.blogit.Activities.RegisterActivity
 import com.example.blogit.Model.Chat
+import com.example.blogit.Model.GroupChat
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
