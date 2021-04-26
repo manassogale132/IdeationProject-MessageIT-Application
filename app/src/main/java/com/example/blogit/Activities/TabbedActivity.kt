@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_tabbed.*
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -34,6 +35,8 @@ class TabbedActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var fStore: FirebaseFirestore
+
+    private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,7 @@ class TabbedActivity : AppCompatActivity() {
         fStore = FirebaseFirestore.getInstance()
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
+        viewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
@@ -52,7 +55,15 @@ class TabbedActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
     }
-    //-------------------------------------------------------------------------------------------------------------------------
+
+    override fun onBackPressed() {
+        if(viewPager.currentItem != 0) {
+            viewPager.setCurrentItem(0)
+        }
+        else {
+            finish()
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         var menuInflater : MenuInflater = getMenuInflater()
