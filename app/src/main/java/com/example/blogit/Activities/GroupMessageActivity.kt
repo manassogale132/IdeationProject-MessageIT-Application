@@ -116,11 +116,7 @@ class GroupMessageActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val ref: DocumentReference =  db.collection("Groups").document(groupIDString)
         val queryTwo : Query = ref.collection("Group Chats")
-            .whereEqualTo("groupIDReceiver","6e1be562-c635-4c2a-8c60-1728925d4ff4")
             .orderBy("creationtime",Query.Direction.ASCENDING)
-
-        // .collection("Group Chats")
-        //.where("groupIDReceiver", "==", "6e1be562-c635-4c2a-8c60-1728925d4ff4")
 
         queryTwo.addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {

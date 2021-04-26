@@ -54,15 +54,7 @@ class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
         holder.circular_image_view.setOnClickListener {
             val intent = Intent(it.context, StatusImageFullScreen::class.java)
             intent.putExtra("pimage",model.pimage)
-
-            val options : ActivityOptionsCompat?  = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActivityOptionsCompat.makeSceneTransitionAnimation(it.context as Activity,holder.circular_image_view ,
-                    "example_transition" )
-            } else {
-                null
-            }
-
-            it.context.startActivity(intent , options?.toBundle())
+            it.context.startActivity(intent)
         }
     }
 

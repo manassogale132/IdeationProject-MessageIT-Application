@@ -12,14 +12,10 @@ class Groups {
 
     }
 
-    constructor(groupID: String?, groupName: String?,groupAdminUid: String?) {
-        this.groupID = groupID
-        this.groupName = groupName
-        this.groupAdminUid = groupAdminUid
-    }
 
-    constructor(addedUserID: String?,addedUserName: String?) {
+    constructor(addedUserID: String?,addedUserName: String?,groupAdminUid: String?) {
         this.addedUserID = addedUserID
         this.addedUserName = addedUserName
+        this.groupAdminUid = groupAdminUid
     }
 }

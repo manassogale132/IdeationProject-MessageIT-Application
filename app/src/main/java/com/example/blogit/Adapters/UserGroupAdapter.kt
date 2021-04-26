@@ -44,8 +44,9 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
             firebaseUser = FirebaseAuth.getInstance().currentUser
             val addedUserID = model.userID
             val addedUserName = model.fullName
+            val groupAdminUid = firebaseUser!!.uid
 
-            val group = Groups(addedUserID,addedUserName)
+            val group = Groups(addedUserID,addedUserName,groupAdminUid)
 
             db.collection("Groups").document(groupStringId).collection("Members").document(addedUserID!!)
                 .set(group).addOnSuccessListener {
