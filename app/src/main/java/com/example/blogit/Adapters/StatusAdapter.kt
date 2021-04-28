@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,8 @@ class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
 
             builder.setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
                deleteItem(holder.adapterPosition)
+                Toast.makeText(it.context, "Status removed!", Toast.LENGTH_SHORT).show()
+
             })
             builder.setNegativeButton("No", DialogInterface.OnClickListener { _, _ ->
             })

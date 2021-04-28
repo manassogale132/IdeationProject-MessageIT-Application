@@ -40,6 +40,18 @@
         app:layout_constraintStart_toEndOf="@+id/image_layout"
         app:layout_constraintTop_toTopOf="@+id/image_layout" />
 
+    <ImageView
+        android:id="@+id/removeUserFromGroup"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <View
         android:id="@+id/view"
         android:layout_width="0dp"

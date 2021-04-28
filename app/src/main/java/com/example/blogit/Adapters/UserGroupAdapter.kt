@@ -55,7 +55,7 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
                 .addOnFailureListener {
                     Log.d("Groups Add", "NotAdded: failure")
                 }
-
+            holder.addUserToGroup.setText("Added")
             Toast.makeText(it.context, "Added to Group!", Toast.LENGTH_SHORT).show()
         }
     }
