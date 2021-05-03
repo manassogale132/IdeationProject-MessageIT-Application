@@ -58,7 +58,6 @@ class GroupFragment: Fragment()   {
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         val groupAdminUid = firebaseUser!!.uid
-
         val query: Query = db.collection("Groups").whereEqualTo("groupAdminUid",groupAdminUid)
 
         val options: FirestoreRecyclerOptions<Groups> = FirestoreRecyclerOptions.Builder<Groups>()
@@ -80,6 +79,10 @@ class GroupFragment: Fragment()   {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        createNewGroupMethod()
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
+    private fun createNewGroupMethod() {
         createGroupBtn.setOnClickListener {
             val dialogPlus = DialogPlus.newDialog(context)
                 .setContentHolder(ViewHolder(R.layout.create_group_dialog))
@@ -99,21 +102,9 @@ class GroupFragment: Fragment()   {
             btn_create_group.setOnClickListener {
 
                 firebaseUser = FirebaseAuth.getInstance().currentUser
-                /*val db = FirebaseFirestore.getInstance()
-                val groupName = groupNameEditText.editableText.toString()
-                val groupAdminUid = firebaseUser!!.uid
 
-                val group = Groups(groupID,groupName,groupAdminUid)
-                db.collection("Groups").document(groupID)
-                    .set(group).addOnSuccessListener {
-                        Log.d("Groups Info Check", "Groups: success")
-                    }
-                    .addOnFailureListener {
-                        Log.d("Groups Info Check", "Groups: failure")
-                    }*/
-
-                groupID = java.util.UUID.randomUUID().toString()
                 val db = FirebaseFirestore.getInstance()
+                groupID = java.util.UUID.randomUUID().toString()
                 val hashMap : HashMap<String, Any> = HashMap()
                 hashMap.put("groupID",groupID)
                 hashMap.put("groupName",groupNameEditText.editableText.toString())

@@ -1,5 +1,6 @@
 package com.example.blogit.Adapters
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.Intent.getIntent
@@ -35,6 +36,7 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
         return UserGroupAdapter.MyViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: UserInfo) {
         holder.userName.text = model.fullName
         holder.userBio.text = model.status
@@ -55,7 +57,10 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
                 .addOnFailureListener {
                     Log.d("Groups Add", "NotAdded: failure")
                 }
-            holder.addUserToGroup.setText("Added")
+
+            holder.addUserToGroup.isEnabled = false
+            holder.addUserToGroup.text = "Added"
+
             Toast.makeText(it.context, "Added to Group!", Toast.LENGTH_SHORT).show()
         }
     }
