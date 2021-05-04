@@ -58,7 +58,11 @@ class GroupFragment: Fragment()   {
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         val groupAdminUid = firebaseUser!!.uid
-        val query: Query = db.collection("Groups").whereEqualTo("groupAdminUid",groupAdminUid)
+        val query: Query = db.collection("Groups")
+            .whereArrayContains("memberIds",firebaseUser!!.uid)
+
+        //.collection("Groups")
+        //.where("memberIds", "array-contains", "")
 
         val options: FirestoreRecyclerOptions<Groups> = FirestoreRecyclerOptions.Builder<Groups>()
             .setQuery(query, Groups::class.java).build()
@@ -105,11 +109,15 @@ class GroupFragment: Fragment()   {
 
                 val db = FirebaseFirestore.getInstance()
                 groupID = java.util.UUID.randomUUID().toString()
+
+                val idList : List<String> = firebaseUser!!.uid.split("\\s*,\\s*")
+
                 val hashMap : HashMap<String, Any> = HashMap()
                 hashMap.put("groupID",groupID)
                 hashMap.put("groupName",groupNameEditText.editableText.toString())
                 hashMap.put("groupAdminUid",firebaseUser!!.uid)
                 hashMap.put("creationtime",System.currentTimeMillis())
+                hashMap.put("memberIds",idList)
 
                 db.collection("Groups").document(groupID).set(hashMap)
 

@@ -124,10 +124,7 @@ class GroupMessageActivity : AppCompatActivity() {
                 for (documentsnapshot: DocumentSnapshot in value!!.documents) {
                     val groupChat: GroupChat? = documentsnapshot.toObject(GroupChat::class.java)
 
-                    if (groupChat?.groupIDReceiver.equals(myid) && groupChat?.sender.equals(groupID) ||
-                        groupChat?.groupIDReceiver.equals(groupID) && groupChat?.sender.equals(myid)) {
                         gMChat.add(groupChat!!)
-                    }
 
                     groupMessageAdapter = GroupMessageAdapter(this@GroupMessageActivity,gMChat)
                     recyclerViewGroupMessageList.adapter = groupMessageAdapter

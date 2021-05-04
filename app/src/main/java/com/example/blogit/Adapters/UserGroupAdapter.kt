@@ -1,11 +1,6 @@
 package com.example.blogit.Adapters
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent.getActivity
-import android.content.Intent
-import android.content.Intent.getIntent
-import android.content.Intent.parseUri
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +9,13 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.blogit.Model.Groups
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import de.hdodenhof.circleimageview.CircleImageView
 
 class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : String):
@@ -43,20 +37,28 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
 
         holder.addUserToGroup.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
+
             firebaseUser = FirebaseAuth.getInstance().currentUser
             val addedUserID = model.userID
-            val addedUserName = model.fullName
-            val groupAdminUid = firebaseUser!!.uid
+            //val addedUserName = model.fullName
+           // val groupAdminUid = firebaseUser!!.uid
+            val idList : List<String> = addedUserID!!.split("\\s*,\\s*")
 
-            val group = Groups(addedUserID,addedUserName,groupAdminUid)
+            val hashMap : HashMap<String, Any> = HashMap()
+            hashMap.put("memberIds",idList)
 
-            db.collection("Groups").document(groupStringId).collection("Members").document(addedUserID!!)
+            db.collection("Groups").document(groupStringId)
+                .update("memberIds",FieldValue.arrayUnion(firebaseUser!!.uid,addedUserID))
+
+
+            /*db.collection("Groups").document(groupStringId).collection("Members").document(addedUserID!!)
                 .set(group).addOnSuccessListener {
                     Log.d("Groups Add", "Added: success")
                 }
                 .addOnFailureListener {
                     Log.d("Groups Add", "NotAdded: failure")
-                }
+                }*/
+
 
             holder.addUserToGroup.isEnabled = false
             holder.addUserToGroup.text = "Added"

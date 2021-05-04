@@ -1,5 +1,7 @@
 package com.example.blogit.Model
 
+import java.util.*
+
 class Groups {
 
     var groupID : String? = null
@@ -8,6 +10,7 @@ class Groups {
     var addedUserID : String? = null
     var addedUserName : String? = null
     var groupAdminUid : String? = null
+
     constructor(){
 
     }
