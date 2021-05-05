@@ -4,6 +4,7 @@ package com.example.blogit.Activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +37,7 @@ class GroupMessageActivity : AppCompatActivity() {
 
     private lateinit var groupIDString : String
     private lateinit var groupIDName : String
+    private lateinit var adminCheck : String
 
     private lateinit var ref : Query
 
@@ -53,6 +55,8 @@ class GroupMessageActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
+        adminCheck = firebaseUser!!.uid
+
         recyclerViewGroupMessageList = findViewById(R.id.recyclerViewGroupMessageList)
         recyclerViewGroupMessageList.setHasFixedSize(true)
         manager = LinearLayoutManager(this)
@@ -64,6 +68,17 @@ class GroupMessageActivity : AppCompatActivity() {
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
                 selectedGroupName.text = value?.getString("groupName")
+
+                adminCheck = value?.getString("groupAdminUid").toString()
+
+                if(adminCheck.equals(firebaseUser!!.uid)){
+                    addUserTotheGroupImgView.setOnClickListener {
+                        addUserTotheGroupImgViewMethod()
+                    }
+                }
+                else{
+                    addUserTotheGroupImgView.visibility = View.GONE
+                }
 
                 readMessages(firebaseUser!!.uid,groupIDString)
             }

@@ -76,7 +76,9 @@
         android:layout_above="@id/input_bar"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="67dp"
-        android:padding="10dp" />
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 
     <LinearLayout
         android:id="@+id/input_bar"
