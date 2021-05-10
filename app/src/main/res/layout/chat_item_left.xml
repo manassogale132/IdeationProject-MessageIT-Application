@@ -32,6 +32,16 @@
         android:layout_marginTop="8dp"
         android:textColor="@color/teal_700" />
 
+    <TextView
+        android:id="@+id/senderUid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/messageTimeStamp"
+        android:text="senderuid"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:textColor="#AEAEAE" />
+
 
     <TextView
         android:id="@+id/text_seen"

@@ -34,7 +34,7 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
         val groupChat : GroupChat = gMChat.get(position)
         holder.show_message.setText(groupChat.message)
         holder.messageTimeStamp.setText(groupChat.timestamp)
-
+        holder.senderUid.setText(groupChat.sender)
     }
 
     override fun getItemCount(): Int {
@@ -44,6 +44,7 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var show_message : TextView = itemView.findViewById(R.id.show_message)
         var messageTimeStamp : TextView = itemView.findViewById(R.id.messageTimeStamp)
+        var senderUid : TextView = itemView.findViewById(R.id.senderUid)
     }
 
     override fun getItemViewType(position: Int): Int {
