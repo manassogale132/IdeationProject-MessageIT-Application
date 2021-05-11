@@ -6,17 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.blogit.Model.Chat
 import com.example.blogit.Model.GroupChat
+import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupChat>) : RecyclerView.Adapter<GroupMessageAdapter.MyViewHolder>()  {
 
     private  var firebaseUser: FirebaseUser? = null
     val MSG_TYPE_LEFT : Int = 0
     val MSG_TYPE_RIGHT : Int = 1
+    private var db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupMessageAdapter.MyViewHolder {
         return if(viewType == MSG_TYPE_RIGHT) {
@@ -34,7 +40,12 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
         val groupChat : GroupChat = gMChat.get(position)
         holder.show_message.setText(groupChat.message)
         holder.messageTimeStamp.setText(groupChat.timestamp)
-        holder.senderUid.setText(groupChat.sender)
+
+        db.collection("User Profiles").document(groupChat.sender.toString())
+            .get().addOnSuccessListener {documentSnapshot ->
+                val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
+                holder.senderUid.setText(userInfo?.fullName)
+            }
     }
 
     override fun getItemCount(): Int {

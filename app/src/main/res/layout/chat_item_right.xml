@@ -32,7 +32,7 @@
         android:textStyle="bold"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
-        android:textColor="@color/teal_700"
+        android:textColor="#9A9A9A"
         android:layout_alignParentRight="true" />
 
     <TextView
