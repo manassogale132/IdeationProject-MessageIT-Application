@@ -97,10 +97,14 @@ class GroupMessageActivity : AppCompatActivity() {
         }
 
         send_button_group.setOnClickListener {
+            val calendar : Calendar = Calendar.getInstance()
+            val simpleDateFormat = SimpleDateFormat("dd-MMM / hh:mm a")
+            val dateTime : String = simpleDateFormat.format(calendar.time)
+
             val msg : String = message_input_group.text.toString()
             if(!msg.equals("")) {
                 sendMessage(firebaseUser!!.uid, groupIDString , groupIDName, msg, creationtime = System.currentTimeMillis(),
-                    timestamp = SimpleDateFormat("dd-MM-yyyy / hh:mm:ss").format(Date()))
+                    timestamp = dateTime)
             }
             else {
                 Toast.makeText(this,"You cannot send empty message",Toast.LENGTH_SHORT).show()

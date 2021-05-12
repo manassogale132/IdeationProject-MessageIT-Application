@@ -73,10 +73,14 @@ class MessageActivity : AppCompatActivity()  {
         })
 
         send_button.setOnClickListener {
+            val calendar : Calendar = Calendar.getInstance()
+            val simpleDateFormat = SimpleDateFormat("dd-MMM / hh:mm a")
+            val dateTime : String = simpleDateFormat.format(calendar.time)
+
             val msg : String = message_input.text.toString()
             if(!msg.equals("")) {
                 sendMessage(firebaseUser!!.uid, userid, msg, creationtime = System.currentTimeMillis(),
-                    timestamp = SimpleDateFormat("dd-MM-yyyy / hh:mm:ss").format(Date()))
+                    timestamp = dateTime)
             }
             else {
                 Toast.makeText(this,"You cannot send empty message",Toast.LENGTH_SHORT).show()
