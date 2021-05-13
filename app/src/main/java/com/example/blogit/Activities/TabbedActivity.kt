@@ -52,6 +52,12 @@ class TabbedActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
 
+        tabs.getTabAt(0)?.setIcon(R.drawable.ic_baseline_message_24)
+        tabs.getTabAt(1)?.setIcon(R.drawable.white_baseline_person_24)
+        tabs.getTabAt(2)?.setIcon(R.drawable.ic_baseline_groupstab_24)
+        tabs.getTabAt(3)?.setIcon(R.drawable.ic_baseline_statustab_24)
+        tabs.getTabAt(4)?.setIcon(R.drawable.ic_baseline_account_circle_24)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
     }

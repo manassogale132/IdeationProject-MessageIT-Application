@@ -57,7 +57,6 @@ class GroupFragment: Fragment()   {
         val db = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        val groupAdminUid = firebaseUser!!.uid
         val query: Query = db.collection("Groups")
             .whereArrayContains("memberIds",firebaseUser!!.uid)
 

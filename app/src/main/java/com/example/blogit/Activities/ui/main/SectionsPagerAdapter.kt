@@ -46,11 +46,11 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return   "Chats"
-            1 -> return  context.getString(R.string.users)
-            2 -> return  context.getString(R.string.groups)
-            3 -> return  context.getString(R.string.status)
-            4 -> return  context.getString(R.string.profile)
+            0 -> return  ""
+            1 -> return  ""//context.getString(R.string.users)
+            2 -> return  ""//context.getString(R.string.groups)
+            3 -> return  ""//context.getString(R.string.status)
+            4 -> return  ""//context.getString(R.string.profile)
 
         }
         return null

@@ -29,12 +29,16 @@ class ChatsFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chats, container, false)
         auth = FirebaseAuth.getInstance()
+        mUsers = ArrayList()
+
         val userID = auth.currentUser?.uid
 
         recyclerViewChatsList = view.findViewById(R.id.recyclerViewChatsList)
         manager = LinearLayoutManager(context)
         recyclerViewChatsList.setHasFixedSize(true);
         recyclerViewChatsList.layoutManager = manager
+        usersAdapter = UsersAdapter(context!!,mUsers,true)
+        recyclerViewChatsList.adapter = usersAdapter
 
         usersList = ArrayList()
 
@@ -66,7 +70,6 @@ class ChatsFragment : Fragment(){
     }
 
     private fun readChats() {
-        mUsers = ArrayList()
 
         val db = FirebaseFirestore.getInstance()
         collectionReference = db.collection("User Profiles")
@@ -94,9 +97,7 @@ class ChatsFragment : Fragment(){
                         }
                     }
                 }
-
-                usersAdapter = UsersAdapter(context!!,mUsers,true)
-                recyclerViewChatsList.adapter = usersAdapter
+                usersAdapter.notifyDataSetChanged()
             }
         })
     }

@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>,var isChat: Boolean) : RecyclerView.Adapter<UsersAdapter.MyViewHolder>() {
+class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var isChat: Boolean) : RecyclerView.Adapter<UsersAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):MyViewHolder {
@@ -33,7 +33,7 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>,var i
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val userInfo : UserInfo = mUsers.get(position)
+        val userInfo : UserInfo = mUsers!![position]
         holder.userName.text = userInfo.fullName
         holder.userBio.text = userInfo.status
 
@@ -58,7 +58,7 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>,var i
     }
 
     override fun getItemCount(): Int {
-        return mUsers.size
+        return mUsers!!.size
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

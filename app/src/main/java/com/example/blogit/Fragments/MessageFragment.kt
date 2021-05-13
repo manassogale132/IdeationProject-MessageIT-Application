@@ -26,13 +26,16 @@ class MessageFragment  : Fragment()  {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_allusers_chat,container,false)
         auth = FirebaseAuth.getInstance()
+        mUsers = ArrayList()
 
         recyclerViewALlUsersList = view.findViewById(R.id.recyclerViewALlUsersList)
         manager = LinearLayoutManager(context)
         recyclerViewALlUsersList.setHasFixedSize(true);
         recyclerViewALlUsersList.layoutManager = manager
+        usersAdapter = UsersAdapter(context!!,mUsers,false)
+        recyclerViewALlUsersList.adapter = usersAdapter
 
-        mUsers = ArrayList()
+
 
         loadDataIntoRecycler()
 
@@ -53,8 +56,7 @@ class MessageFragment  : Fragment()  {
                         mUsers.add(userInfo!!)
                     }
                 }
-                usersAdapter = UsersAdapter(context!!,mUsers,true)
-                recyclerViewALlUsersList.adapter = usersAdapter
+                usersAdapter.notifyDataSetChanged()
             }
         })
     }
