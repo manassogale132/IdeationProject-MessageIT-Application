@@ -41,7 +41,6 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
         holder.show_message.setText(groupChat.message)
         holder.messageTimeStamp.setText(groupChat.timestamp)
         holder.text_seen.visibility = View.GONE
-        holder.senderUid.setText(groupChat?.sender)
 
         /*if(getItemViewType(position) == MSG_TYPE_LEFT){
             db.collection("User Profiles").document(groupChat.sender.toString())
@@ -50,6 +49,9 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
                     holder.senderUid.setText(userInfo?.fullName)
                 }
         }*/
+        if(getItemViewType(position) == MSG_TYPE_LEFT){
+            holder.senderUid.setText(groupChat.senderName)
+        }
     }
 
     override fun getItemCount(): Int {

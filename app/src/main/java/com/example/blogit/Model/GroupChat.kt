@@ -3,6 +3,7 @@ package com.example.blogit.Model
 class GroupChat {
 
     var sender: String? = null
+    var senderName: String? = null
     var groupIDReceiver: String? = null
     var groupNameReceiver: String? = null
     var creationtime: Long = System.currentTimeMillis()
@@ -13,8 +14,9 @@ class GroupChat {
 
     }
 
-    constructor(sender: String?, groupIDReceiver: String?, groupNameReceiver: String?, message: String?, timestamp: String?) {
+    constructor(sender: String? , senderName: String?, groupIDReceiver: String?, groupNameReceiver: String?, message: String?, timestamp: String?) {
         this.sender = sender
+        this.senderName = senderName
         this.groupIDReceiver = groupIDReceiver
         this.groupNameReceiver = groupNameReceiver
         this.message = message

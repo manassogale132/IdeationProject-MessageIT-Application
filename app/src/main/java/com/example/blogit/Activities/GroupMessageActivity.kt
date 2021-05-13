@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blogit.Adapters.GroupMessageAdapter
 import com.example.blogit.Model.GroupChat
+import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -35,6 +36,7 @@ class GroupMessageActivity : AppCompatActivity() {
     private lateinit var groupIDString : String
     private lateinit var groupIDName : String
     private lateinit var adminCheck : String
+    private lateinit var senderName : String
 
     private lateinit var ref : Query
 
@@ -98,25 +100,34 @@ class GroupMessageActivity : AppCompatActivity() {
             val simpleDateFormat = SimpleDateFormat("dd-MMM / hh:mm a")
             val dateTime : String = simpleDateFormat.format(calendar.time)
 
-            val msg : String = message_input_group.text.toString()
-            if(!msg.equals("")) {
-                sendMessage(firebaseUser!!.uid, groupIDString , groupIDName, msg, creationtime = System.currentTimeMillis(),
-                    timestamp = dateTime)
-            }
-            else {
-                Toast.makeText(this,"You cannot send empty message",Toast.LENGTH_SHORT).show()
-            }
-            message_input_group.setText("")
+            fStore.collection("User Profiles").document(firebaseUser!!.uid)
+                .get().addOnSuccessListener {documentSnapshot ->
+                    val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
+                    val msg : String = message_input_group.text.toString()
+                    if(!msg.equals("")) {
+                        sendMessage(firebaseUser!!.uid, senderName = userInfo?.fullName.toString(),
+                            groupIDReceiver = groupIDString,
+                            groupNameReceiver = groupIDName, message = msg, creationtime = System.currentTimeMillis(),
+                            timestamp = dateTime)
+                    }
+                    else {
+                        Toast.makeText(this,"You cannot send empty message",Toast.LENGTH_SHORT).show()
+                    }
+                    message_input_group.setText("")
+                }
+
+
         }
 
     }
 
-    private fun sendMessage(sender :String, groupIDReceiver: String, groupNameReceiver: String , message: String
+    private fun sendMessage(sender :String ,senderName :String, groupIDReceiver: String, groupNameReceiver: String , message: String
                             ,creationtime : Long,timestamp : String) {
 
         val db = FirebaseFirestore.getInstance()
         val hashMap : HashMap<String, Any> = HashMap()
         hashMap.put("sender",sender)
+        hashMap.put("senderName",senderName)
         hashMap.put("groupIDReceiver",groupIDReceiver)
         hashMap.put("groupNameReceiver",groupNameReceiver)
         hashMap.put("message",message)
