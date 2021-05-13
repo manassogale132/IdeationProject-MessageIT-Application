@@ -5,10 +5,7 @@ import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.blogit.Fragments.GroupFragment
-import com.example.blogit.Fragments.MessageFragment
-import com.example.blogit.Fragments.ProfileFragment
-import com.example.blogit.Fragments.StatusFragment
+import com.example.blogit.Fragments.*
 import com.example.blogit.R
 
 private val TAB_TITLES = arrayOf(
@@ -29,15 +26,18 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         var fragment: Fragment? = null
         when (position) {
             0 -> {
-                fragment = MessageFragment()
+                fragment = ChatsFragment()
             }
             1 -> {
-                fragment = StatusFragment()
+                fragment = MessageFragment()
             }
             2 -> {
                 fragment = GroupFragment()
             }
             3 -> {
+                fragment = StatusFragment()
+            }
+            4 -> {
                 fragment = ProfileFragment()
             }
         }
@@ -46,10 +46,11 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
-            0 -> return  context.getString(R.string.users)
-            1 -> return  context.getString(R.string.status)
+            0 -> return   "Chats"
+            1 -> return  context.getString(R.string.users)
             2 -> return  context.getString(R.string.groups)
-            3 -> return  context.getString(R.string.profile)
+            3 -> return  context.getString(R.string.status)
+            4 -> return  context.getString(R.string.profile)
 
         }
         return null
@@ -57,6 +58,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getCount(): Int {
         // Show 4 total pages.
-        return 4
+        return 5
     }
 }

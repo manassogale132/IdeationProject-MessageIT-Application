@@ -1,5 +1,6 @@
 package com.example.blogit.Adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +23,8 @@ import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>,var isChat: Boolean):
-    FirestoreRecyclerAdapter<UserInfo, UsersAdapter.MyViewHolder>(options)  {
+class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>,var isChat: Boolean) : RecyclerView.Adapter<UsersAdapter.MyViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,12 +32,13 @@ class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>,var isChat: Boole
         return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: UserInfo) {
-        holder.userName.text = model.fullName
-        holder.userBio.text = model.status
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val userInfo : UserInfo = mUsers.get(position)
+        holder.userName.text = userInfo.fullName
+        holder.userBio.text = userInfo.status
 
         if (isChat) {
-            if(model.onlineOfflineStatus.equals("online")){
+            if(userInfo.onlineOfflineStatus.equals("online")){
                 holder.img_on.visibility = View.VISIBLE
                 holder.img_off.visibility = View.GONE
             } else {
@@ -50,9 +52,13 @@ class UsersAdapter(options: FirestoreRecyclerOptions<UserInfo>,var isChat: Boole
 
         holder.sendMessage.setOnClickListener {
             val intent = Intent(it.context, MessageActivity::class.java)
-            intent.putExtra("userID",model.userID)
+            intent.putExtra("userID",userInfo.userID)
             it.context.startActivity(intent)
         }
+    }
+
+    override fun getItemCount(): Int {
+        return mUsers.size
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

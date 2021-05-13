@@ -43,6 +43,8 @@ class MessageAdapter(var context: Context,var mChat: MutableList<Chat>) : Recycl
             else {
                 holder.text_seen.setText("Delivered")
             }
+        } else {
+            holder.text_seen.visibility = View.GONE
         }
     }
 
