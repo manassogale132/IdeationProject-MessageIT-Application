@@ -40,12 +40,16 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
         val groupChat : GroupChat = gMChat.get(position)
         holder.show_message.setText(groupChat.message)
         holder.messageTimeStamp.setText(groupChat.timestamp)
+        holder.text_seen.visibility = View.GONE
+        holder.senderUid.setText(groupChat?.sender)
 
-        db.collection("User Profiles").document(groupChat.sender.toString())
-            .get().addOnSuccessListener {documentSnapshot ->
-                val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
-                holder.senderUid.setText(userInfo?.fullName)
-            }
+        /*if(getItemViewType(position) == MSG_TYPE_LEFT){
+            db.collection("User Profiles").document(groupChat.sender.toString())
+                .get().addOnSuccessListener {documentSnapshot ->
+                    val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
+                    holder.senderUid.setText(userInfo?.fullName)
+                }
+        }*/
     }
 
     override fun getItemCount(): Int {
@@ -55,6 +59,7 @@ class GroupMessageAdapter(var context: Context, var gMChat: MutableList<GroupCha
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var show_message : TextView = itemView.findViewById(R.id.show_message)
         var messageTimeStamp : TextView = itemView.findViewById(R.id.messageTimeStamp)
+        var text_seen : TextView = itemView.findViewById(R.id.text_seen)
         var senderUid : TextView = itemView.findViewById(R.id.senderUid)
     }
 

@@ -144,6 +144,7 @@ class MessageActivity : AppCompatActivity()  {
 
                     messageAdapter = MessageAdapter(this@MessageActivity,mchat)
                     recyclerViewMessageList.adapter = messageAdapter
+                    recyclerViewMessageList.scrollToPosition(recyclerViewMessageList.adapter!!.itemCount - 1)
                 }
             }
         })

@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blogit.Adapters.GroupMessageAdapter
-import com.example.blogit.Adapters.MessageAdapter
-import com.example.blogit.Model.Chat
 import com.example.blogit.Model.GroupChat
 import com.example.blogit.R
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +17,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
 import kotlinx.android.synthetic.main.activity_groupmessage.*
-import kotlinx.android.synthetic.main.activity_message.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -147,6 +144,7 @@ class GroupMessageActivity : AppCompatActivity() {
 
                     groupMessageAdapter = GroupMessageAdapter(this@GroupMessageActivity,gMChat)
                     recyclerViewGroupMessageList.adapter = groupMessageAdapter
+                    recyclerViewGroupMessageList.scrollToPosition(recyclerViewGroupMessageList.adapter!!.itemCount - 1)
                 }
             }
         })
