@@ -69,4 +69,9 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var 
         var img_on : CircleImageView = itemView.findViewById(R.id.img_on)
         var img_off : CircleImageView = itemView.findViewById(R.id.img_off)
     }
+
+    fun filterList(filteredList : ArrayList<UserInfo>) {
+        mUsers = filteredList
+        notifyDataSetChanged()
+    }
 }
