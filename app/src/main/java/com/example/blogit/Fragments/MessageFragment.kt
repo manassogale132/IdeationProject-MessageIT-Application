@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,10 +33,8 @@ class MessageFragment  : Fragment()  {
         manager = LinearLayoutManager(context)
         recyclerViewALlUsersList.setHasFixedSize(true);
         recyclerViewALlUsersList.layoutManager = manager
-        usersAdapter = UsersAdapter(context!!,mUsers,false)
+        usersAdapter = UsersAdapter(context!!,mUsers,true)
         recyclerViewALlUsersList.adapter = usersAdapter
-
-
 
         loadDataIntoRecycler()
 
@@ -64,6 +63,10 @@ class MessageFragment  : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        searchUserByNameMethod()
+    }
+
+    private fun searchUserByNameMethod() {
         searchUserET.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 filterMethod(s.toString())

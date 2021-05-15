@@ -8,20 +8,25 @@
 
     <EditText
         android:id="@+id/searchUserET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_gravity="center"
+        android:layout_height="55dp"
         android:padding="16dp"
-        android:background="@drawable/custon_background"
-        android:hint="Search user..."
+        android:background="@drawable/custom_background_two"
+        android:hint="Search from all user..."
+        android:maxLength="30"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        />
+        android:drawableEnd="@drawable/ic_baseline_searchhhhh_24"
+        android:drawableRight="@drawable/ic_baseline_searchhhhh_24"
+        android:elevation="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewALlUsersList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="15dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="10dp"
