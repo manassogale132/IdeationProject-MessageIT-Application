@@ -3,9 +3,11 @@ package com.example.blogit.Fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,10 +26,18 @@ class MessageFragment  : Fragment()  {
     lateinit var mUsers: MutableList<UserInfo>
     lateinit var manager : LinearLayoutManager
 
+    lateinit var  collectionReference: CollectionReference
+
+    lateinit var registration : ListenerRegistration
+
+    lateinit var searchUserET : EditText
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_allusers_chat,container,false)
         auth = FirebaseAuth.getInstance()
         mUsers = ArrayList()
+
+        searchUserET = view.findViewById(R.id.searchUserET)
 
         recyclerViewALlUsersList = view.findViewById(R.id.recyclerViewALlUsersList)
         manager = LinearLayoutManager(context)
@@ -37,16 +47,16 @@ class MessageFragment  : Fragment()  {
         recyclerViewALlUsersList.adapter = usersAdapter
 
         loadDataIntoRecycler()
-
+        searchUserByNameMethod()
         return view
     }
 
     private fun loadDataIntoRecycler() {
         val userID = auth.currentUser?.uid
         val db = FirebaseFirestore.getInstance()
-        val collectionReference: CollectionReference = db.collection("User Profiles")
+        collectionReference = db.collection("User Profiles")
 
-        collectionReference.addSnapshotListener(object : EventListener<QuerySnapshot> {
+        registration = collectionReference.addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
                 mUsers.clear()
                 for (documentsnapshot: DocumentSnapshot in value!!.documents) {
@@ -55,15 +65,19 @@ class MessageFragment  : Fragment()  {
                         mUsers.add(userInfo!!)
                     }
                 }
+                filterMethod(searchUserET.text.toString())
                 usersAdapter.notifyDataSetChanged()
             }
         })
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        registration.remove()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        searchUserByNameMethod()
     }
 
     private fun searchUserByNameMethod() {
@@ -84,12 +98,11 @@ class MessageFragment  : Fragment()  {
     private fun filterMethod(text: String) {
         val filteredList: ArrayList<UserInfo> = ArrayList()
 
-        for(user : UserInfo in mUsers) {
-            if(user.fullName?.toLowerCase()?.contains(text.toLowerCase())!!) {
-                filteredList.add(user)
+        for (user: UserInfo in mUsers) {
+            if (user.fullName?.toLowerCase()?.contains(text.toLowerCase())!!) {
+                    filteredList.add(user)
             }
         }
-
         usersAdapter.filterList(filteredList)
     }
 }

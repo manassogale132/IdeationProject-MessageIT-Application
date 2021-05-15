@@ -2,6 +2,7 @@ package com.example.blogit.Adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +59,7 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var 
     }
 
     override fun getItemCount(): Int {
+        Log.e("sizecheck", "getItemCount: ${mUsers!!.size} ")
         return mUsers!!.size
     }
 
@@ -71,6 +73,7 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var 
     }
 
     fun filterList(filteredList : ArrayList<UserInfo>) {
+        Log.e("sizecheck", "filterlist: ${filteredList}  ")
         mUsers = filteredList
         notifyDataSetChanged()
     }
