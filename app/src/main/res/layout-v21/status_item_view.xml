@@ -22,7 +22,7 @@
             android:layout_centerInParent="true"
             android:padding="6dp"
             app:civ_border_width="1dp"
-            app:civ_border_color="@color/teal_700"
+            app:civ_border_color="#B5B5B5"
             android:src="@drawable/button_background"
             android:transitionName="example_transition"
             />
