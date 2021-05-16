@@ -21,11 +21,11 @@ import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var isChat: Boolean) : RecyclerView.Adapter<UsersAdapter.MyViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -34,9 +34,11 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var 
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
         val userInfo : UserInfo = mUsers!![position]
         holder.userName.text = userInfo.fullName
         holder.userBio.text = userInfo.status
+        Glide.with(holder.user_circular_image_view.context).load(userInfo.profileimage).error(R.drawable.default_user_image).into(holder.user_circular_image_view)
 
         if (isChat) {
             if(userInfo.onlineOfflineStatus.equals("online")){

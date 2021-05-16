@@ -9,13 +9,14 @@ class UserInfo {
     var emailId : String? = null
     var phoneNumber : String? = null
     var onlineOfflineStatus : String? = null
+    var profileimage : String? = null
 
     constructor(){
 
     }
 
 
-    constructor(userID: String?, status: String?, fullName: String?, age: String?, emailId: String?, phoneNumber: String?, onlineOfflineStatus : String?) {
+    constructor(userID: String?, status: String?, fullName: String?, age: String?, emailId: String?, phoneNumber: String?, onlineOfflineStatus : String?,profileimage : String?) {
         this.userID = userID
         this.status = status
         this.fullName = fullName
@@ -23,6 +24,7 @@ class UserInfo {
         this.emailId = emailId
         this.phoneNumber = phoneNumber
         this.onlineOfflineStatus = onlineOfflineStatus
+        this.profileimage = profileimage
     }
 
     constructor(

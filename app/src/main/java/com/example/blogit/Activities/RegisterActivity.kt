@@ -100,8 +100,9 @@ class RegisterActivity : AppCompatActivity() {
                     val emailId = registerEmailId.editableText.toString()
                     val phoneNumber = registerPhoneNumber.editableText.toString()
                     val onlineOfflineStatus = "offline"
+                    val profileimage = "default"
 
-                    val userInfo = UserInfo(userID,status,fullName,age,emailId,phoneNumber,onlineOfflineStatus)
+                    val userInfo = UserInfo(userID,status,fullName,age,emailId,phoneNumber,onlineOfflineStatus,profileimage)
 
                     db.collection("User Profiles").document(userID!!)
                         .set(userInfo).addOnSuccessListener {
