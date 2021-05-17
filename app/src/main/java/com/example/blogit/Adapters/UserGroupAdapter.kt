@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -32,10 +33,13 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: UserInfo) {
+        holder.setIsRecyclable(false)
         holder.userName.text = model.fullName
         holder.userBio.text = model.status
+        Glide.with(holder.user_circular_image_view_group_list.context).load(model.profileimage).error(R.drawable.default_user_image).into(holder.user_circular_image_view_group_list)
 
         holder.addUserToGroup.setOnClickListener {
+
             val db = FirebaseFirestore.getInstance()
 
             firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -59,16 +63,14 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
                     Log.d("Groups Add", "NotAdded: failure")
                 }*/
 
-
             holder.addUserToGroup.isEnabled = false
             holder.addUserToGroup.text = "Added"
-
             Toast.makeText(it.context, "Added to Group!", Toast.LENGTH_SHORT).show()
         }
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var user_circular_image_view : CircleImageView = itemView.findViewById(R.id.user_circular_image_view)
+        var user_circular_image_view_group_list : CircleImageView = itemView.findViewById(R.id.user_circular_image_view_group_list)
         var userName : TextView = itemView.findViewById(R.id.userNameGroup)
         var userBio : TextView = itemView.findViewById(R.id.userBioGroup)
         var addUserToGroup : Button = itemView.findViewById(R.id.addUserToGroup)

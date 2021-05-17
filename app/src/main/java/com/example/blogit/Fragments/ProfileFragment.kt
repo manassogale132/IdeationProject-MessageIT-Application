@@ -34,6 +34,8 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_groupmessage.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.forgot_password_dialog.*
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -56,6 +58,8 @@ class ProfileFragment : Fragment() {
     private lateinit var filePath: Uri
     private lateinit var bitmap: Bitmap
 
+    lateinit var user_profile_photo : CircleImageView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
@@ -65,6 +69,8 @@ class ProfileFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()
+
+        user_profile_photo = view.findViewById(R.id.user_profile_photo)
 
         val userID = auth.currentUser?.uid
         val documentReference: DocumentReference = fStore.collection("User Profiles").document(userID!!)
@@ -78,6 +84,15 @@ class ProfileFragment : Fragment() {
                 user_phone?.text = value?.getString("phoneNumber")
             }
         })
+
+        fStore.collection("User Profiles").document(userID)
+            .get().addOnSuccessListener {documentSnapshot ->
+                val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
+                Glide.with(this)
+                    .load(userInfo!!.profileimage)
+                    .error(R.drawable.default_user_image)
+                    .into(user_profile_photo);
+            }
 
 
         user_edit_info.setOnClickListener {
@@ -115,12 +130,6 @@ class ProfileFragment : Fragment() {
                 status.setText(value?.getString("status"))
             }
         })
-
-        /*fStore.collection("User Profiles").document(userID)
-            .get().addOnSuccessListener {documentSnapshot ->
-                val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
-                Glide.with(this@ProfileFragment).load(userInfo!!.profileimage).error(R.drawable.default_user_image).into(user_profile_photo)
-            }*/
 
         close.setOnClickListener {
             dialogPlus.dismiss()
@@ -200,9 +209,7 @@ class ProfileFragment : Fragment() {
                         fStore.collection("User Profiles").document(userID!!).update(map)
 
                         imageViewUploadProfile.setImageResource(R.drawable.ic_baseline_file_upload_24)
-
-                        Glide.with(this).load(imageURL).into(user_profile_photo);
-
+                        //Glide.with(this).load(imageURL).into(user_profile_photo);
                         Toast.makeText(context as Activity?, "Profile image uploaded!", Toast.LENGTH_SHORT).show()
                         dialogPlus.dismiss()
                     }
@@ -217,6 +224,7 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             filePath = data?.data!!                              //image uri is in filepath
+            user_profile_photo.setImageBitmap(bitmap)
             try {
                 val inputStream: InputStream? = requireContext().contentResolver.openInputStream(filePath)
                 bitmap = BitmapFactory.decodeStream(inputStream)

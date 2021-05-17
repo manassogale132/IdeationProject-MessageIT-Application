@@ -19,6 +19,7 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/background_right"
         android:padding="8dp"
+        android:maxWidth="250dp"
         android:text="message"
         android:textColor="@color/black"
         android:textSize="18dp" />
