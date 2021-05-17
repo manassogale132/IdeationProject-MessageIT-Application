@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.blogit.Adapters.StatusAdapter
+import com.example.blogit.Adapters.StatusAdapterTwo
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -56,8 +57,11 @@ class StatusFragment : Fragment() {
     private lateinit var bitmap: Bitmap
 
     lateinit var recyclerViewStatusList : RecyclerView
+    lateinit var recyclerViewOthersStatusList : RecyclerView
     lateinit var statusAdapter: StatusAdapter
+    lateinit var statusAdapterTwo: StatusAdapterTwo
     lateinit var manager : LinearLayoutManager
+    lateinit var managerTwo : LinearLayoutManager
 
     lateinit var myViewTwo: View
 
@@ -66,8 +70,13 @@ class StatusFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         recyclerViewStatusList = view.findViewById(R.id.recyclerViewStatusList)
+        recyclerViewOthersStatusList = view.findViewById(R.id.recyclerViewOthersStatusList)
+
         manager = LinearLayoutManager(context)
+        managerTwo = LinearLayoutManager(context)
+
         recyclerViewStatusList.layoutManager = manager
+        recyclerViewOthersStatusList.layoutManager = managerTwo
 
         loadDataIntoRecycler()
 
@@ -79,22 +88,32 @@ class StatusFragment : Fragment() {
         val userID = auth.currentUser?.uid
 
         val db = FirebaseFirestore.getInstance()
-        val query: Query = db.collection("Status Info").whereEqualTo("userID", userID).orderBy("creationTime",Query.Direction.DESCENDING)
 
+        val query: Query = db.collection("Status Info").whereEqualTo("userID", userID).orderBy("creationTime",Query.Direction.DESCENDING)
         val options: FirestoreRecyclerOptions<StatusInfo> = FirestoreRecyclerOptions.Builder<StatusInfo>()
             .setQuery(query, StatusInfo::class.java).build()
 
         statusAdapter = StatusAdapter(options)
         recyclerViewStatusList.adapter = statusAdapter
+
+        val queryTwo: Query = db.collection("Status Info").whereNotEqualTo("userID", userID)
+        val optionsTwo: FirestoreRecyclerOptions<StatusInfo> = FirestoreRecyclerOptions.Builder<StatusInfo>()
+            .setQuery(queryTwo, StatusInfo::class.java).build()
+
+        statusAdapterTwo = StatusAdapterTwo(optionsTwo)
+        recyclerViewOthersStatusList.adapter = statusAdapterTwo
     }
+
     override fun onStart() {
         super.onStart()
         statusAdapter.startListening()
+        statusAdapterTwo.startListening()
     }
 
     override fun onStop() {
         super.onStop()
         statusAdapter.stopListening()
+        statusAdapterTwo.stopListening()
     }
     //-------------------------------------------------------------------------------------------------------------------------
     @SuppressLint("SimpleDateFormat")
