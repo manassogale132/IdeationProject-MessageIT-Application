@@ -38,7 +38,7 @@ class UsersAdapter(var context: Context, var mUsers: MutableList<UserInfo>?,var 
         val userInfo : UserInfo = mUsers!![position]
         holder.userName.text = userInfo.fullName
         holder.userBio.text = userInfo.status
-        Glide.with(holder.user_circular_image_view.context).load(userInfo.profileimage).error(R.drawable.default_user_image).into(holder.user_circular_image_view)
+        Glide.with(holder.user_circular_image_view.context).load(userInfo.profileimage).error(R.drawable.blank_profile_picture).into(holder.user_circular_image_view)
 
         if (isChat) {
             if(userInfo.onlineOfflineStatus.equals("online")){

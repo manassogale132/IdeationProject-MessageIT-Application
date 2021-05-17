@@ -36,7 +36,10 @@ class UserGroupAdapter(options: FirestoreRecyclerOptions<UserInfo>, groupid : St
         holder.setIsRecyclable(false)
         holder.userName.text = model.fullName
         holder.userBio.text = model.status
-        Glide.with(holder.user_circular_image_view_group_list.context).load(model.profileimage).error(R.drawable.default_user_image).into(holder.user_circular_image_view_group_list)
+        Glide.with(holder.user_circular_image_view_group_list.context)
+            .load(model.profileimage)
+            .error(R.drawable.blank_profile_picture)
+            .into(holder.user_circular_image_view_group_list)
 
         holder.addUserToGroup.setOnClickListener {
 

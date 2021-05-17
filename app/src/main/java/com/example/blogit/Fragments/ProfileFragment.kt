@@ -90,7 +90,7 @@ class ProfileFragment : Fragment() {
                 val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
                 Glide.with(this)
                     .load(userInfo!!.profileimage)
-                    .error(R.drawable.default_user_image)
+                    .error(R.drawable.blank_profile_picture)
                     .into(user_profile_photo);
             }
 
