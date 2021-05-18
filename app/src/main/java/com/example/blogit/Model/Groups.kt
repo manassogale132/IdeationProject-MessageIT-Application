@@ -10,6 +10,7 @@ class Groups {
     var addedUserID : String? = null
     var addedUserName : String? = null
     var groupAdminUid : String? = null
+    var groupBioInfo : String? = null
 
     constructor(){
 

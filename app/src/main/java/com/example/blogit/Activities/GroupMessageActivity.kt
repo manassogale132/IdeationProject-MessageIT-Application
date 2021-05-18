@@ -4,20 +4,26 @@ package com.example.blogit.Activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blogit.Adapters.GroupMessageAdapter
 import com.example.blogit.Model.GroupChat
+import com.example.blogit.Model.Groups
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.ViewHolder
 import kotlinx.android.synthetic.main.activity_groupmessage.*
+import kotlinx.android.synthetic.main.add_group_bio_info_dialog.view.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -32,6 +38,8 @@ class GroupMessageActivity : AppCompatActivity() {
     lateinit var gMChat : MutableList<GroupChat>
     lateinit var recyclerViewGroupMessageList : RecyclerView
     lateinit var manager : LinearLayoutManager
+
+    lateinit var myViewTwo: View
 
     private lateinit var groupIDString : String
     private lateinit var groupIDName : String
@@ -119,6 +127,10 @@ class GroupMessageActivity : AppCompatActivity() {
 
         }
 
+        groupInfoBio.setOnClickListener {
+            addGroupBioMethod()
+        }
+
     }
 
     private fun sendMessage(sender :String ,senderName :String, groupIDReceiver: String, groupNameReceiver: String , message: String
@@ -173,5 +185,47 @@ class GroupMessageActivity : AppCompatActivity() {
         Toast.makeText(this, "Showing all Group members!", Toast.LENGTH_SHORT).show()
         intent.putExtra("groupID",groupIDString)
         startActivity(intent)
+    }
+
+    private fun addGroupBioMethod() {
+        val dialogPlus = DialogPlus.newDialog(this)
+            .setContentHolder(ViewHolder(R.layout.add_group_bio_info_dialog))
+            .setGravity(Gravity.CENTER).create()
+
+        myViewTwo = dialogPlus.holderView
+        val groupBioInfoTextView: TextView = myViewTwo.findViewById(R.id.groupBioInfoTextView)
+        val groupBioInfoEditText: EditText = myViewTwo.findViewById(R.id.groupBioInfoEditText)
+        val btn_save_groupbio: Button = myViewTwo.findViewById(R.id.btn_save_groupbio)
+        val btn_close_groupbio: Button = myViewTwo.findViewById(R.id.btn_close_groupbio)
+
+        dialogPlus.show()
+
+        val documentReference: DocumentReference = fStore.collection("Groups").document(groupIDString)
+
+        documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
+            override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+                groupBioInfoTextView.setText(value?.getString("groupBioInfo"))
+
+                adminCheck = value?.getString("groupAdminUid").toString()
+                if(!adminCheck.equals(firebaseUser!!.uid)){
+                    groupBioInfoEditText.visibility = View.GONE
+                    btn_save_groupbio.visibility = View.GONE
+                    btn_close_groupbio.visibility = View.GONE
+                }
+
+            }
+        })
+
+        btn_close_groupbio.setOnClickListener {
+            dialogPlus.dismiss()
+        }
+
+        btn_save_groupbio.setOnClickListener {
+            val hashMap: MutableMap<String, Any> = HashMap()
+            hashMap.put("groupBioInfo",groupBioInfoEditText.text.toString())
+
+            fStore.collection("Groups").document(groupIDString).update(hashMap)
+            Toast.makeText(it.context, "Group bio updated!", Toast.LENGTH_SHORT).show()
+        }
     }
 }

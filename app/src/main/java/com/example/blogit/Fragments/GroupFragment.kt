@@ -116,6 +116,7 @@ class GroupFragment: Fragment()   {
                 hashMap.put("groupName",groupNameEditText.editableText.toString())
                 hashMap.put("groupAdminUid",firebaseUser!!.uid)
                 hashMap.put("creationtime",System.currentTimeMillis())
+                hashMap.put("groupBioInfo","default")
                 hashMap.put("memberIds",idList)
 
                 db.collection("Groups").document(groupID).set(hashMap)
