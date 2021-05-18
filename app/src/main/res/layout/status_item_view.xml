@@ -34,8 +34,8 @@
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="15dp"
         android:text="Status text"
         android:textColor="@android:color/black"
@@ -47,14 +47,28 @@
         android:id="@+id/createTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="48dp"
         android:text="CreatTime"
         android:textColor="#717171"
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/image_layout"
         app:layout_constraintTop_toTopOf="@+id/image_layout" />
+
+    <TextView
+        android:id="@+id/statusSenderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:text="Sender name"
+        android:textStyle="bold"
+        android:textColor="@color/teal_700"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/createTime"
+        app:layout_constraintTop_toTopOf="@+id/image_layout"
+        android:layout_marginLeft="10dp" />
 
     <ImageView
         android:id="@+id/deleteStatusBtn"

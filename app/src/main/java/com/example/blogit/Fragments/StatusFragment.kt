@@ -27,9 +27,11 @@ import com.bumptech.glide.Glide
 import com.example.blogit.Adapters.StatusAdapter
 import com.example.blogit.Adapters.StatusAdapterTwo
 import com.example.blogit.Model.StatusInfo
+import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
@@ -63,11 +65,16 @@ class StatusFragment : Fragment() {
     lateinit var manager : LinearLayoutManager
     lateinit var managerTwo : LinearLayoutManager
 
+    private lateinit var fStore: FirebaseFirestore
+    private var firebaseUser: FirebaseUser? = null
+
     lateinit var myViewTwo: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_status,container,false)
         auth = FirebaseAuth.getInstance()
+        fStore = FirebaseFirestore.getInstance()
+        firebaseUser = FirebaseAuth.getInstance().currentUser
 
         recyclerViewStatusList = view.findViewById(R.id.recyclerViewStatusList)
         recyclerViewOthersStatusList = view.findViewById(R.id.recyclerViewOthersStatusList)
@@ -166,9 +173,10 @@ class StatusFragment : Fragment() {
                 progressDialog.setTitle("Status uploader")
                 progressDialog.show()
 
+                val randomKey : String = UUID.randomUUID().toString()
+
                 val storage: FirebaseStorage = FirebaseStorage.getInstance()
-                val uploader: StorageReference =
-                    storage.getReference("Image1" + Random().nextInt(30))
+                val uploader: StorageReference = storage.getReference("StatusPics/${firebaseUser!!.uid}/${randomKey}")
 
                 uploader.putFile(filePath)
                     .addOnSuccessListener {
@@ -177,26 +185,33 @@ class StatusFragment : Fragment() {
                             progressDialog.dismiss()
 
                             val db = FirebaseFirestore.getInstance()
+                            val calendar : Calendar = Calendar.getInstance()
+                            val simpleDateFormat = SimpleDateFormat("dd-MM / hh:mm a")
+                            val dateTime : String = simpleDateFormat.format(calendar.time)
 
-                            val userID = auth.currentUser?.uid
-                            val statustext = enterStatus.editableText.toString()
-                            val timestampOne = SimpleDateFormat("dd-MM-yyyy / hh-mm-ss");
-                            val timestamp = timestampOne.format(Date());
+                            fStore.collection("User Profiles").document(firebaseUser!!.uid)
+                                .get().addOnSuccessListener { documentSnapshot ->
+                                    val userInfo: UserInfo? =
+                                        documentSnapshot.toObject(UserInfo::class.java)
+                                    val userID = auth.currentUser?.uid
+                                    val statustext = enterStatus.editableText.toString()
+                                    val timestamp = dateTime
+                                    val statusUploadedName = userInfo!!.fullName
 
-                            val statusInfo = StatusInfo(userID, statustext,timestamp, it.toString())
+                                    val statusInfo = StatusInfo(userID, statustext, timestamp, it.toString(), statusUploadedName)
 
-                            db.collection("Status Info").document()
-                                .set(statusInfo).addOnSuccessListener {
-                                    Log.d("Status Info Check", "Status: success")
+                                    db.collection("Status Info").document()
+                                        .set(statusInfo).addOnSuccessListener {
+                                            Log.d("Status Info Check", "Status: success")
+                                        }
+                                        .addOnFailureListener {
+                                            Log.d("Status Info Check", "Status: failure")
+                                        }
+                                    enterStatus.setText("")
+                                    imageViewUpload.setImageResource(R.drawable.ic_baseline_file_upload_24)
+                                    Toast.makeText(context as Activity?, "Status uploaded!", Toast.LENGTH_SHORT).show()
+                                    dialogPlus.dismiss()
                                 }
-                                .addOnFailureListener {
-                                    Log.d("Status Info Check", "Status: failure")
-                                }
-
-                            enterStatus.setText("")
-                            imageViewUpload.setImageResource(R.drawable.ic_baseline_file_upload_24)
-                            Toast.makeText(context as Activity?, "Status uploaded!", Toast.LENGTH_SHORT).show()
-                            dialogPlus.dismiss()
                         }
                     }
                     .addOnProgressListener {

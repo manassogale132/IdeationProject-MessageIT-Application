@@ -38,7 +38,7 @@ class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
         Glide.with(holder.circular_image_view.context).load(model.pimage).into(holder.circular_image_view)
         holder.statusText.text = model.statustext
         holder.createTime.text = model.timestamp
-
+        holder.statusSenderName.visibility = View.GONE
         holder.deleteStatusBtn.setOnClickListener {
             val builder : AlertDialog.Builder = AlertDialog.Builder(holder.statusText.context)
             builder.setTitle("Delete confirmation ")
@@ -69,6 +69,7 @@ class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
         var circular_image_view : CircleImageView = itemView.findViewById(R.id.circular_image_view)
         var statusText : TextView = itemView.findViewById(R.id.statusText)
         var createTime : TextView = itemView.findViewById(R.id.createTime)
+        var statusSenderName : TextView = itemView.findViewById(R.id.statusSenderName)
         var deleteStatusBtn : ImageView = itemView.findViewById(R.id.deleteStatusBtn)
     }
 

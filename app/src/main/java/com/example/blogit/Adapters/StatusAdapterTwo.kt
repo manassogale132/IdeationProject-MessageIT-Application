@@ -31,7 +31,7 @@ class StatusAdapterTwo (options: FirestoreRecyclerOptions<StatusInfo>):
         Glide.with(holder.circular_image_view.context).load(model.pimage).into(holder.circular_image_view)
         holder.statusText.text = model.statustext
         holder.createTime.text = model.timestamp
-
+        holder.statusSenderName.text = model.statusUploadedName
         holder.deleteStatusBtn.visibility = View.GONE
 
         holder.circular_image_view.setOnClickListener {
@@ -50,6 +50,7 @@ class StatusAdapterTwo (options: FirestoreRecyclerOptions<StatusInfo>):
         var statusText : TextView = itemView.findViewById(R.id.statusText)
         var createTime : TextView = itemView.findViewById(R.id.createTime)
         var deleteStatusBtn : ImageView = itemView.findViewById(R.id.deleteStatusBtn)
+        var statusSenderName : TextView = itemView.findViewById(R.id.statusSenderName)
     }
 
 }
