@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custon_background"
                 android:text="default"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 android:backgroundTint="@color/teal_700"
                 android:textColor="@color/white"
                 android:textSize="18sp"

@@ -28,6 +28,15 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp" />
 
+        <ImageView
+            android:id="@+id/groupInfoBio"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_toEndOf="@+id/backGroupMessageActivity"
+            android:layout_toRightOf="@+id/backGroupMessageActivity"
+            android:src="@drawable/ic_baseline_info_24" />
+
         <TextView
             android:id="@+id/selectedGroupName"
             android:layout_width="wrap_content"
@@ -35,27 +44,14 @@
             android:text="groupname"
             android:textColor="@color/white"
             android:textSize="20sp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="9dp"
-            android:layout_marginLeft="45dp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="67dp"
             tools:layout_editor_absoluteY="9dp"
-            android:layout_marginStart="45dp" />
-
-        <ImageView
-            android:id="@+id/groupInfoBio"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="214dp"
-            android:layout_marginRight="214dp"
-            android:layout_toEndOf="@+id/selectedGroupName"
-            android:layout_toRightOf="@+id/selectedGroupName"
-            android:src="@drawable/ic_baseline_info_24" />
+            android:layout_toEndOf="@+id/groupInfoBio"
+            android:layout_toRightOf="@+id/groupInfoBio"
+            android:layout_marginLeft="10dp" />
 
         <ImageView
             android:id="@+id/addUserTotheGroupImgView"
