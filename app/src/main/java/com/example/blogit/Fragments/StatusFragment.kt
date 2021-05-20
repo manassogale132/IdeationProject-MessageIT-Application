@@ -65,7 +65,6 @@ class StatusFragment : Fragment() {
     lateinit var manager : LinearLayoutManager
     lateinit var managerTwo : LinearLayoutManager
 
-    private lateinit var fStore: FirebaseFirestore
     private var firebaseUser: FirebaseUser? = null
 
     lateinit var myViewTwo: View
@@ -73,7 +72,6 @@ class StatusFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_status,container,false)
         auth = FirebaseAuth.getInstance()
-        fStore = FirebaseFirestore.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         recyclerViewStatusList = view.findViewById(R.id.recyclerViewStatusList)
@@ -189,7 +187,7 @@ class StatusFragment : Fragment() {
                             val simpleDateFormat = SimpleDateFormat("dd-MM / hh:mm a")
                             val dateTime : String = simpleDateFormat.format(calendar.time)
 
-                            fStore.collection("User Profiles").document(firebaseUser!!.uid)
+                            db.collection("User Profiles").document(firebaseUser!!.uid)
                                 .get().addOnSuccessListener { documentSnapshot ->
                                     val userInfo: UserInfo? =
                                         documentSnapshot.toObject(UserInfo::class.java)

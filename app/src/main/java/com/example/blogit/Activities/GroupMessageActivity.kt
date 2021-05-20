@@ -228,4 +228,24 @@ class GroupMessageActivity : AppCompatActivity() {
             Toast.makeText(it.context, "Group bio updated!", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun status(onlineOfflineStatus : String) {
+
+        val userID = auth.currentUser?.uid
+        val documentReference: DocumentReference = fStore.collection("User Profiles").document(userID!!)
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap.put("onlineOfflineStatus",onlineOfflineStatus)
+
+        documentReference.update(hashMap)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        status("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        status("offline")
+    }
 }

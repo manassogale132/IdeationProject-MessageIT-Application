@@ -77,23 +77,20 @@ class ProfileFragment : Fragment() {
 
         documentReference.addSnapshotListener(object : EventListener<DocumentSnapshot> {
             override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+                val userInfo: UserInfo? = value?.toObject(UserInfo::class.java)
                 user_profile_name?.text = value?.getString("fullName")
                 user_bio?.text = value?.getString("status")
                 user_email?.text = value?.getString("emailId")
                 user_age?.text = value?.getString("age")
                 user_phone?.text = value?.getString("phoneNumber")
+                if(isAdded) {
+                    Glide.with(context!!)
+                        .load(userInfo!!.profileimage)
+                        .error(R.drawable.blank_profile_picture)
+                        .into(user_profile_photo);
+                }
             }
         })
-
-        fStore.collection("User Profiles").document(userID)
-            .get().addOnSuccessListener {documentSnapshot ->
-                val userInfo: UserInfo? = documentSnapshot.toObject(UserInfo::class.java)
-                Glide.with(this)
-                    .load(userInfo!!.profileimage)
-                    .error(R.drawable.blank_profile_picture)
-                    .into(user_profile_photo);
-            }
-
 
         user_edit_info.setOnClickListener {
             editUserInformation()
@@ -224,7 +221,6 @@ class ProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             filePath = data?.data!!                              //image uri is in filepath
-            user_profile_photo.setImageBitmap(bitmap)
             try {
                 val inputStream: InputStream? = requireContext().contentResolver.openInputStream(filePath)
                 bitmap = BitmapFactory.decodeStream(inputStream)

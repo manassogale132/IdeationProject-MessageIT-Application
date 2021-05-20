@@ -122,6 +122,7 @@ class GroupFragment: Fragment()   {
                 db.collection("Groups").document(groupID).set(hashMap)
 
                 groupNameEditText.setText("")
+                dialogPlus.dismiss()
                 Toast.makeText(context as Activity?, "Group Created!", Toast.LENGTH_SHORT).show()
             }
         }

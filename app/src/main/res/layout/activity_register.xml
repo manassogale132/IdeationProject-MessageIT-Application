@@ -148,6 +148,7 @@
             <EditText
                 android:id="@+id/registerPhoneNumber"
                 android:layout_width="320dp"
+                android:maxLength="10"
                 android:layout_height="52dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="48dp"
