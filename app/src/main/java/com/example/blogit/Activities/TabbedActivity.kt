@@ -17,7 +17,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import androidx.work.*
 import com.example.blogit.Activities.ui.main.SectionsPagerAdapter
+import com.example.blogit.EventHandler
 import com.example.blogit.R
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +30,7 @@ import com.orhanobut.dialogplus.ViewHolder
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_tabbed.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
 
 
@@ -42,6 +45,24 @@ class TabbedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tabbed)
         loadLocale()
+
+        val constraints: Constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        /*val oneTimeWorkRequest: OneTimeWorkRequest = OneTimeWorkRequest
+            .Builder(EventHandler::class.java)
+            .setInitialDelay(10, TimeUnit.SECONDS)
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance(this@TabbedActivity).enqueue(oneTimeWorkRequest)*/
+
+        val periodicWorkRequest: PeriodicWorkRequest = PeriodicWorkRequest
+            .Builder(EventHandler::class.java, 10, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+        WorkManager.getInstance(this@TabbedActivity).enqueue(periodicWorkRequest)
 
         auth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()

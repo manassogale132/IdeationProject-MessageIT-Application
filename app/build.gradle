@@ -69,4 +69,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.0.2' // Dexter for permission management
 
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1' // Firebase UI
+
+    def work_version = "2.5.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"  //Work Manager
 }
