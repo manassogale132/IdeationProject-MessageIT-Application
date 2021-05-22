@@ -46,23 +46,25 @@ class TabbedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tabbed)
         loadLocale()
 
-        val constraints: Constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresBatteryNotLow(true)
-            .build()
+        /*val constraints: Constraints = Constraints.Builder()
+            .setRequiresStorageNotLow(false)
+            .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+            .setRequiresBatteryNotLow(false)
+            .setRequiresCharging(false)
+            .build()*/
 
-        /*val oneTimeWorkRequest: OneTimeWorkRequest = OneTimeWorkRequest
-            .Builder(EventHandler::class.java)
-            .setInitialDelay(10, TimeUnit.SECONDS)
+        /*val oneTimeWorkRequest = OneTimeWorkRequestBuilder<EventHandler>()
             .setConstraints(constraints)
             .build()
-        WorkManager.getInstance(this@TabbedActivity).enqueue(oneTimeWorkRequest)*/
+        WorkManager.getInstance(applicationContext).enqueue(oneTimeWorkRequest)*/
 
-        val periodicWorkRequest: PeriodicWorkRequest = PeriodicWorkRequest
-            .Builder(EventHandler::class.java, 10, TimeUnit.MINUTES)
+        /*val periodicWorkRequest = PeriodicWorkRequestBuilder<EventHandler>( 15,TimeUnit.MINUTES)
             .setConstraints(constraints)
+            .addTag("uniquePeriodicWork")
             .build()
-        WorkManager.getInstance(this@TabbedActivity).enqueue(periodicWorkRequest)
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork("uniquePeriodicWork"
+                ,ExistingPeriodicWorkPolicy.REPLACE,periodicWorkRequest)*/
+
 
         auth = FirebaseAuth.getInstance()
         fStore = FirebaseFirestore.getInstance()

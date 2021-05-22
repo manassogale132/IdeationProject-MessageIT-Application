@@ -23,9 +23,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import androidx.work.*
 import com.example.blogit.Adapters.StatusAdapter
 import com.example.blogit.Adapters.StatusAdapterTwo
+import com.example.blogit.EventHandler
 import com.example.blogit.Model.StatusInfo
 import com.example.blogit.Model.UserInfo
 import com.example.blogit.R
@@ -45,12 +46,11 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.orhanobut.dialogplus.DialogPlus
 import com.orhanobut.dialogplus.ViewHolder
 import kotlinx.android.synthetic.main.fragment_status.*
-import kotlinx.android.synthetic.main.fragment_uploadimage_status_dialog.*
 import kotlinx.android.synthetic.main.fragment_uploadimage_status_dialog.view.*
-import kotlinx.android.synthetic.main.status_item_view.*
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class StatusFragment : Fragment() {
 
@@ -98,7 +98,7 @@ class StatusFragment : Fragment() {
         val options: FirestoreRecyclerOptions<StatusInfo> = FirestoreRecyclerOptions.Builder<StatusInfo>()
             .setQuery(query, StatusInfo::class.java).build()
 
-        statusAdapter = StatusAdapter(options)
+        statusAdapter = StatusAdapter(options,requireContext())
         recyclerViewStatusList.adapter = statusAdapter
 
         val queryTwo: Query = db.collection("Status Info").whereNotEqualTo("userID", userID)
@@ -198,8 +198,11 @@ class StatusFragment : Fragment() {
 
                                     val statusInfo = StatusInfo(userID, statustext, timestamp, it.toString(), statusUploadedName)
 
-                                    db.collection("Status Info").document()
+                                    val documentReference = db.collection("Status Info").document()
+                                    documentReference
                                         .set(statusInfo).addOnSuccessListener {
+                                            val statusId = documentReference.id
+                                            setExpirationHandler(statusId)
                                             Log.d("Status Info Check", "Status: success")
                                         }
                                         .addOnFailureListener {
@@ -219,6 +222,21 @@ class StatusFragment : Fragment() {
             }
         }
     }
+
+    private fun setExpirationHandler(statusId: String) {
+        val constraints: Constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val oneTimeWorkRequest = OneTimeWorkRequestBuilder<EventHandler>()
+            .setConstraints(constraints)
+            .setInitialDelay(24,TimeUnit.HOURS)
+            .addTag(statusId)
+            .setInputData(workDataOf("StatusId" to statusId))
+            .build()
+        WorkManager.getInstance(context!!.applicationContext).enqueue(oneTimeWorkRequest)
+    }
+
     //-------------------------------------------------------------------------------------------------------------------------
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {

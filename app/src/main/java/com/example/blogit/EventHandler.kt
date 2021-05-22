@@ -7,27 +7,47 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.work.*
 import com.example.blogit.Activities.TabbedActivity
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.suspendCoroutine
 
-class EventHandler(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+class EventHandler(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
 
     lateinit var notificationManager: NotificationManager
     lateinit var builder: Notification.Builder
     lateinit var notificationChannel: NotificationChannel
     private val description = "Test WorkManager Notification"
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun doWork(): Result {
-        showNotification()
-        return Result.success()
+
+    override suspend fun doWork(): Result {
+        return try {
+            setStatusExpiration()
+            Result.success()
+        } catch (exception : Exception) {
+            Result.failure()
+        }
+    }
+
+    private suspend fun setStatusExpiration() = suspendCoroutine<Unit> {continuation ->
+        val statusId = inputData.getString("StatusId") ?: throw IllegalStateException("Status id is not found")
+        FirebaseFirestore.getInstance().collection("Status Info").document(statusId)
+            .delete().addOnSuccessListener {
+            continuation.resumeWith(kotlin.Result.success(Unit))
+        }
+            .addOnFailureListener {
+                continuation.resumeWith(kotlin.Result.failure(it))
+            }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun showNotification() {
-
+        Log.i("Test", "showNotification: Working")
         val intent = Intent(applicationContext, TabbedActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
@@ -58,9 +78,4 @@ class EventHandler(context: Context, workerParams: WorkerParameters) : Worker(co
         notificationManager.notify(101, builder.build())
     }
 
-    /*fun setConstraint(): Constraints {
-        val constraints: Constraints = Constraints.Builder()
-            .build()
-        return constraints
-    }*/
 }

@@ -3,6 +3,7 @@ package com.example.blogit.Adapters
 import android.app.Activity
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
@@ -15,6 +16,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.example.blogit.Activities.GroupMessageActivity
 import com.example.blogit.Activities.StatusImageFullScreen
@@ -25,7 +27,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_statusimagefullscreen.*
 
-class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
+class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo> ,private val context: Context):
     FirestoreRecyclerAdapter<StatusInfo, StatusAdapter.MyViewHolder>(options) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):MyViewHolder {
@@ -62,7 +64,10 @@ class StatusAdapter (options: FirestoreRecyclerOptions<StatusInfo>):
     }
 
     public fun deleteItem(position: Int) {
-        snapshots.getSnapshot(position).reference.delete()
+        val reference = snapshots.getSnapshot(position).reference
+        val id = reference.id
+        reference.delete()
+        WorkManager.getInstance(context.applicationContext).cancelAllWorkByTag(id)
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
